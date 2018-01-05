@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom'
 import userService from 'services/User'
 
-class Login extends Component {
+class Register extends Component {
   constructor(props, context) {
     super(props, context)
     this.state = {
       userName: '',
       password: '',
+      about: ''
     }
   }
 
@@ -18,7 +19,7 @@ class Login extends Component {
 
   async handleSubmit (event) {
     event.preventDefault()
-    await userService.login(this.state)
+    await userService.register(this.state)
     this.context.router.history.push('/')
   }
 
@@ -29,7 +30,7 @@ class Login extends Component {
           <form className="form-signin bg-light border rounded p-5 col-sm-6"
             onSubmit={this.handleSubmit.bind(this)}
           >
-            <h2 className="form-signin-heading">Please sign in</h2>
+            <h2 className="form-signin-heading">Register</h2>
             <hr/>
             <label htmlFor="inputUser" className="sr-only">User Name</label>
             <input
@@ -62,16 +63,16 @@ class Login extends Component {
             />
 
             <button className="btn btn-lg btn-primary btn-block" type="submit">
-              <i className="fa fa-sign-in"></i> Sign in
+              <i className="fa fa-user-plus"></i> Register
             </button>
           </form>
         </div>
         <div className="row justify-content-md-center">
-          <Link to="/register">New to OpenChat? Register</Link>
+          <Link to="/login">Already registered? Log In</Link>
         </div>
       </div>
     )
   }
 }
 
-export default Login
+export default Register
