@@ -1,12 +1,11 @@
 import axios from 'axios'
 import User from 'domain/User'
 
-const parse = data => new User(
-  {
-    id: data.userId,
-    name: data.username,
-    about: data.about
-  })
+const parse = data => new User({
+  id: data.userId,
+  name: data.username,
+  about: data.about
+})
 
 class UserService {
   async register (user) {
@@ -56,7 +55,7 @@ class UserService {
     return Promise.resolve(true)
   }
 
-  async getUsers() {
+  async getUsers () {
     //const response = await axios.get(process.env.API_URL + 'users/'))
     const response = [{
       "userId" : "123e4567-e89b-12d3-a456-426655440000",
@@ -74,7 +73,18 @@ class UserService {
       "follows" : "true"
     }]
 
+    this.users = response.map(user => parse(user) )
+      .reduce( (map, user) => {
+        map[user.id] = user
+        return map
+      })
+
     return Promise.resolve( response.map(user => parse(user) ))
+  }
+
+  async findById (id) {
+    if (!this.users) await this.getUsers()
+    return this.users[id]
   }
 }
 

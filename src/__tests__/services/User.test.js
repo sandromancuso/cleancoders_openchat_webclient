@@ -3,24 +3,25 @@ import userService from 'services/User'
 
 const userData = { user: 'a user', password: 'a password' }
 
+function expectUserDefined (user) {
+  expect(user).toBeInstanceOf(User)
+  expect(user.id).toBeDefined()
+  expect(user.name).toBeDefined()
+  expect(user.about).toBeDefined()
+}
+
 describe('UserService', () => {
   it('logs in', async () => {
     const result = await userService.login(userData)
 
-    expect(result).toBeInstanceOf(User)
-    expect(result.id).toBeDefined()
-    expect(result.name).toBeDefined()
-    expect(result.about).toBeDefined()
+    expectUserDefined(result)
     expect(userService.user).toEqual(result)
   })
 
   it('registers', async () => {
     const result = await userService.register(userData)
 
-    expect(result).toBeInstanceOf(User)
-    expect(result.id).toBeDefined()
-    expect(result.name).toBeDefined()
-    expect(result.about).toBeDefined()
+    expectUserDefined(result)
     expect(userService.user).toEqual(result)
   })
 
@@ -46,10 +47,15 @@ describe('UserService', () => {
     const result = await userService.getUsers()
 
     expect(result).toBeInstanceOf(Array)
-    expect(result[0]).toBeInstanceOf(User)
-    expect(result[0].id).toBeDefined()
-    expect(result[0].name).toBeDefined()
-    expect(result[0].about).toBeDefined()
+    expectUserDefined(result[0])
+  })
+
+  it('finds users by Id', async () => {
+    const id = '316h3543-e89b-12d3-a456-426655440000'
+
+    const result = await userService.findById(id)
+
+    expectUserDefined(result)
   })
 
 })
