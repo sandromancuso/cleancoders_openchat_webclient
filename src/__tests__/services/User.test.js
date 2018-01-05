@@ -1,11 +1,11 @@
 import User from 'domain/User'
 import userService from 'services/User'
 
+const userData = { user: 'a user', password: 'a password' }
+
 describe('UserService', () => {
   it('logs in', async () => {
-    const data = { user: 'a user', password: 'a password' }
-
-    const result = await userService.login(data)
+    const result = await userService.login(userData)
 
     expect(result).toBeInstanceOf(User)
     expect(result.id).toBeDefined()
@@ -15,9 +15,7 @@ describe('UserService', () => {
   })
 
   it('registers', async () => {
-    const data = { user: 'a user', password: 'a password', about: 'an about' }
-
-    const result = await userService.register(data)
+    const result = await userService.register(userData)
 
     expect(result).toBeInstanceOf(User)
     expect(result.id).toBeDefined()
@@ -27,21 +25,19 @@ describe('UserService', () => {
   })
 
   it('logs out', async () => {
-    const data = { user: 'a user', password: 'a password', about: 'an about' }
-    await userService.register(data)
+    await userService.register(userData)
     await userService.logout()
 
     expect(userService.user).toBe(null)
   })
 
   it('follows', async () => {
-    const current = { user: 'a user', password: 'a password', about: 'an about' }
     const toFollow = { user: 'a user', password: 'a password', about: 'an about' }
 
-    await userService.register(current)
+    await userService.register(userData)
     await userService.register(toFollow)
 
-    const result = await userService.follow(current, toFollow)
+    const result = await userService.follow(userData, toFollow)
 
     expect(result).toBe(true)
   })
