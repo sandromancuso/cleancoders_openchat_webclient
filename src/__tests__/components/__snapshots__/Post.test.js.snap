@@ -1,3 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Post renders 1`] = `"<div class=\\"row justify-content-md-center bg-light border rounded my-2 py-2\\"><div class=\\"col-sm-8\\">Some text</div><div class=\\"col-sm-4 text-right\\"><span class=\\"font-italic\\">Posted on 18/02/2018 at 11:12:13</span></div></div>"`;
+exports[`Post renders 1`] = `
+
+<div class="row justify-content-md-center bg-light border rounded my-2 py-2">
+  <div class="col-sm-8">
+    Some text
+  </div>
+  <div class="col-sm-4 text-right">
+    <span class="font-italic">
+      Posted on 18/02/2018 at 11:12:13
+    </span>
+  </div>
+</div>
+
+`;
