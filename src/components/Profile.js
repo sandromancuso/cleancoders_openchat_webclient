@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import Post from 'components/Post'
-import PostCreator from 'components/PostCreator'
 import userService from 'services/User'
 import postService from 'services/Post'
 
-class Wall extends Component {
+class Profile extends Component {
   constructor(props, context) {
     super(props, context)
     this.state = {
@@ -19,8 +18,7 @@ class Wall extends Component {
   render () {
     return (
       <div className="container">
-        <h2>Wall</h2>
-        <PostCreator />
+        <h2>Profile</h2>
         {this.list()}
       </div>
     )
@@ -35,7 +33,7 @@ class Wall extends Component {
       id = userService.user.id
     }
 
-    const posts = await postService.getWallOfUser(id)
+    const posts = await postService.getPostsOfUser(id)
 
     const list = await Promise.all(
       posts.map( async post => {
@@ -48,4 +46,4 @@ class Wall extends Component {
   }
 }
 
-export default Wall
+export default Profile
