@@ -2,9 +2,8 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Header from 'components/Header'
 import userService from 'services/User'
-import User from 'domain/User'
+import { aUser } from 'testFixtures'
 
-const aUser = new User({ id: 'some id', name: 'some name', about: 'about him' })
 const router = createMockRouter()
 const context = { router }
 
