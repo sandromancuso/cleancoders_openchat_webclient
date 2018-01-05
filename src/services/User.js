@@ -9,10 +9,6 @@ const parse = data => new User(
   })
 
 class UserService {
-  get User () {
-    return this.user
-  }
-
   async register (user) {
     const request = {
       username: user.name,
