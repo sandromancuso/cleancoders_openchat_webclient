@@ -1,0 +1,26 @@
+{
+  "name": "openchat-web",
+  "version": "0.1.0",
+  "author": "Nacho García <lupus.zgz@gmail.com>",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.17.0",
+    "bootstrap": "^4.0.0-beta.3",
+    "font-awesome": "^4.7.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.0.16"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "enzyme": "^3.1.0",
+    "enzyme-adapter-react-16": "^1.0.3",
+    "react-test-renderer": "^16.0.0"
+  }
+}
