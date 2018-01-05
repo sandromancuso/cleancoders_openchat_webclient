@@ -15,7 +15,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "unit": "react-scripts test components --env=jsdom",
+    "integration": "react-scripts test services --env=jsdom",
+    "test": "react-scripts test services components --env=jsdom",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
