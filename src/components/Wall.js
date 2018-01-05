@@ -4,28 +4,31 @@ import userService from 'services/User'
 import postService from 'services/Post'
 
 class Wall extends Component {
-  state = {
-    posts: []
-  }
+  state = { list: [] }
 
-  posts() {
-    return this.state.posts.map( post => <Post key={post.id} post={post} /> )
+  list() {
+    return this.state.list.map( ({ post, user }) => <Post key={post.id} post={post} user={user}/>)
   }
 
   render () {
     return (
       <div className="container">
-        {this.posts()}
+        {this.list()}
       </div>
     )
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     const posts = await postService.getWallOfUser(userService.user.id)
 
-    this.setState({
-      posts: posts
-    })
+    const list = await Promise.all(
+      posts.map( async post => {
+        const user = await userService.findById(post.userId)
+        return { post, user }
+      })
+    )
+
+    this.setState({ list })
   }
 }
 
