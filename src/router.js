@@ -17,9 +17,13 @@ class Router extends Component {
           <Redirect to="/" /> :
           <Login />
         }/>
-      <Route path='/register' render={ () => userService.user ?
+        <Route path='/register' render={ () => userService.user ?
           <Redirect to="/" /> :
           <Register />
+        }/>
+        <Route path='/wall/:id' render={ () => userService.user ?
+          <Wall /> :
+          <Redirect to="/" />
         }/>
       </Switch>
     )

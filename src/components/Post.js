@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom'
 
 const Post = ({ post, user }) => {
 
@@ -7,7 +9,7 @@ const Post = ({ post, user }) => {
       <div className="card-header">
         <div className="row justify-content-between">
           <div className="col-6">
-            {user.name}
+            <Link to={`/wall/${user.id}`}>{user.name}</Link>
           </div>
           <div className="col-6 text-right text-muted">
             Posted on {post.date} at {post.time}
@@ -19,6 +21,10 @@ const Post = ({ post, user }) => {
       </div>
     </div>
   )
+}
+
+Post.contextTypes = {
+  router: PropTypes.object.isRequired
 }
 
 export default Post
