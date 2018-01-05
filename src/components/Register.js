@@ -61,7 +61,20 @@ class Register extends Component {
                 })
               }}
             />
-
+            <label htmlFor="inputAbout" className="sr-only">About</label>
+            <textarea
+              id="inputAbout"
+              className="form-control my-2"
+              placeholder="Tell us something about yourself"
+              rows="3"
+              required
+              value={this.state.about}
+              onChange={(event) => {
+                this.setState({
+                  about: event.target.value
+                })
+              }}
+            />
             <button className="btn btn-lg btn-primary btn-block" type="submit">
               <i className="fa fa-user-plus"></i> Register
             </button>
