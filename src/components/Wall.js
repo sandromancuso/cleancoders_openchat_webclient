@@ -8,34 +8,36 @@ class Wall extends Component {
   constructor(props, context) {
     super(props, context)
     this.state = {
+      user: {},
       list: []
     }
   }
 
-  list() {
+  list () {
     return this.state.list.map( ({ post, user }) => <Post key={post.id} post={post} user={user}/>)
+  }
+
+  isOwnWall () {
+    return this.state.user.id === userService.user.id
   }
 
   render () {
     return (
       <div className="container">
-        <h2>Wall</h2>
+        <h2>
+          {this.isOwnWall() ?
+            'Your wall' :
+            `${this.state.user.name}'s wall`
+          }
+        </h2>
         <PostCreator />
         {this.list()}
       </div>
     )
   }
 
-  async componentDidMount() {
-    let id
-    try {
-      id = this.context.router.match.params.id
-    }
-    catch (error) {
-      id = userService.user.id
-    }
-
-    const posts = await postService.getWallOfUser(id)
+  async setPostList () {
+    const posts = await postService.getWallOfUser(this.state.user.id)
 
     const list = await Promise.all(
       posts.map( async post => {
@@ -44,7 +46,19 @@ class Wall extends Component {
       })
     )
 
-    this.setState({ list })
+    await this.setState({ list: list })
+  }
+
+  async componentWillMount () {
+    await this.setState({ user: userService.user })
+    await this.setPostList()
+  }
+
+  async componentWillUpdate (props) {
+    if (!props.match || !props.match.params.id || this.state.user.id === props.match.params.id) return null
+    const user = await userService.findById(props.match.params.id)
+    await this.setState({ user: user })
+    await this.setPostList()
   }
 }
 

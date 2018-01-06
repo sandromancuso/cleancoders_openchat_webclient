@@ -4,15 +4,9 @@ import Wall from 'components/Wall'
 import userService from 'services/User'
 import postService from 'services/Post'
 import Post from 'components/Post'
-import { aUser, somePosts } from 'testFixtures'
-
-const router = createMockRouter()
-router.match = {
-  params: {
-    id: 'some params by id'
-  }
-}
-const context = { router }
+import User from 'domain/User'
+import PostCreator from 'components/PostCreator'
+import { aUser, anotherUser, somePosts } from 'testFixtures'
 
 describe('Wall', () => {
   let wrapper
@@ -20,23 +14,39 @@ describe('Wall', () => {
   beforeEach(async () => {
     userService.user = aUser
     postService.getWallOfUser = jest.fn( () => Promise.resolve(somePosts) )
-  })
-
-  it('shows the wall of posts of the user', async () => {
+    userService.findById = jest.fn( () => Promise.resolve(aUser) )
     wrapper = shallow(<Wall/>)
     await flushPromises()
     wrapper.update()
+  })
 
+  it('can create posts', async () => {
+    expect(wrapper.find(PostCreator)).toHaveLength(1)
+  })
+
+  it('shows the wall of posts of the user', async () => {
     const posts = wrapper.find(Post)
+    const userName = wrapper.find('h2')
 
     expect(postService.getWallOfUser).toHaveBeenCalledWith(aUser.id)
     expect(posts).toHaveLength(somePosts.length)
+    expect(userName.text()).toBe('Your wall')
   })
 
   it('uses the id in the route', async () => {
-    wrapper = shallow(<Wall/>, { context })
+    const match = {
+      params: {
+        id: anotherUser.id
+      }
+    }
+    userService.findById = jest.fn( () => Promise.resolve(anotherUser) )
+    wrapper.setProps({ match })
     await flushPromises()
+    wrapper.update()
 
-    expect(postService.getWallOfUser).toHaveBeenCalledWith(router.match.params.id)
+    const userName = wrapper.find('h2')
+
+    expect(postService.getWallOfUser).toHaveBeenCalledWith(match.params.id)
+    expect(userName.text()).toBe(`${anotherUser.name}'s wall`)
   })
 })
