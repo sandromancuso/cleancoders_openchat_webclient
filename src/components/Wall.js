@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import Post from 'components/Post'
 import PostCreator from 'components/PostCreator'
 import userService from 'services/User'
@@ -11,6 +13,10 @@ class Wall extends Component {
       user: {},
       list: []
     }
+  }
+
+  static contextTypes = {
+    router: PropTypes.object.isRequired
   }
 
   list () {
@@ -30,6 +36,11 @@ class Wall extends Component {
             `${this.state.user.name}'s wall`
           }
         </h2>
+        {this.isOwnWall() ?
+          <Link to={`/profile/`}>See profile</Link> :
+          <Link to={`/profile/${this.state.user.id}`}>See {this.state.user.name}'s profile</Link>
+        }
+        <hr />
         {this.isOwnWall() ?
           <PostCreator /> :
           null
