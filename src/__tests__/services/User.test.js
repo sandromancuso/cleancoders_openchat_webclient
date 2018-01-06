@@ -16,6 +16,7 @@ describe('UserService', () => {
 
     expectUserDefined(result)
     expect(userService.user).toEqual(result)
+    expect(localStorage.setItem).toHaveBeenCalledWith('user', JSON.stringify(result))
   })
 
   it('registers', async () => {
@@ -23,6 +24,7 @@ describe('UserService', () => {
 
     expectUserDefined(result)
     expect(userService.user).toEqual(result)
+    expect(localStorage.setItem).toHaveBeenCalledWith('user', JSON.stringify(result))
   })
 
   it('logs out', async () => {
@@ -30,6 +32,7 @@ describe('UserService', () => {
     await userService.logout()
 
     expect(userService.user).toBe(null)
+    expect(localStorage.clear).toHaveBeenCalledTimes(1)
   })
 
   it('follows', async () => {

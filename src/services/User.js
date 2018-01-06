@@ -8,6 +8,19 @@ const parse = data => new User({
 })
 
 class UserService {
+  get user () {
+    if (this._user) return this._user
+
+    const data = localStorage.getItem('user')
+    if (!data) return null
+    this._user = new User(JSON.parse(data))
+    return this._user
+  }
+
+  set user (user) {
+    this._user = user
+  }
+
   async register (user) {
     const request = {
       username: user.name,
@@ -22,6 +35,7 @@ class UserService {
       "about": "I love playing the piano and travelling."
     }
     this.user = parse(response)
+    localStorage.setItem('user', JSON.stringify(this._user))
     return Promise.resolve( parse(response) )
   }
 
@@ -37,12 +51,14 @@ class UserService {
       "username" : "Alice",
       "about" : "I love playing the piano and travelling."
     }
-    this.user = parse(response)
+    this._user = parse(response)
+    localStorage.setItem('user', JSON.stringify(this._user))
     return Promise.resolve( parse(response) )
   }
 
   async logout () {
-    this.user = null
+    this._user = null
+    localStorage.clear()
   }
 
   async follow (current, toFollow) {
