@@ -28,13 +28,17 @@ describe('Wall', () => {
       expect(wrapper.find(PostCreator)).toHaveLength(1)
     })
 
+    it('shows the title', () => {
+      const title = wrapper.find('h2')
+
+      expect(title.text()).toBe('Your wall')
+    })
+
     it('shows the wall of posts of the user', () => {
       const posts = wrapper.find(Post)
-      const userName = wrapper.find('h2')
 
       expect(postService.getWallOfUser).toHaveBeenCalledWith(aUser.id)
       expect(posts).toHaveLength(somePosts.length)
-      expect(userName.text()).toBe('Your wall')
     })
 
     it('links to its profile', () => {
