@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { shallow } from 'enzyme'
 import Register from 'components/Register'
 import userService from 'services/User'
@@ -30,5 +31,11 @@ describe('Register', () => {
 
     expect(userService.register).toHaveBeenCalledWith(state)
     expect(router.history.push).toHaveBeenCalledWith('/')
+  })
+
+  it('links to login', () => {
+    const link = wrapper.find(Link)
+
+    expect(link.prop('to')).toBe('/login/')
   })
 })

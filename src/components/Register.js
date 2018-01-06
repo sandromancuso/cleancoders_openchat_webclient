@@ -81,7 +81,7 @@ class Register extends Component {
           </form>
         </div>
         <div className="row justify-content-md-center">
-          <Link to="/login">Already registered? Log In</Link>
+          <Link to="/login/">Already registered? Log In</Link>
         </div>
       </div>
     )

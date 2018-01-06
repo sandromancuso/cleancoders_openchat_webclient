@@ -67,7 +67,7 @@ class Login extends Component {
           </form>
         </div>
         <div className="row justify-content-md-center">
-          <Link to="/register">New to OpenChat? Register</Link>
+          <Link to="/register/">New to OpenChat? Register</Link>
         </div>
       </div>
     )
