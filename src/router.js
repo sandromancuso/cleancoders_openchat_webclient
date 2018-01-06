@@ -6,14 +6,26 @@ import Login from 'components/Login'
 import Register from 'components/Register'
 import userService from 'services/User'
 
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={props => (
+    userService.user ? (
+      <Component {...props}/>
+    ) : (
+      <Redirect to={{
+        pathname: '/login',
+        state: { from: props.location }
+      }}/>
+    )
+  )}/>
+)
+
 class Router extends Component {
   render() {
     return (
       <Switch>
-        <Route exact path='/' render={ () => userService.user ?
-          <Wall /> :
-          <Redirect to="/login" />
-        }/>
+        <PrivateRoute exact path='/' component={Wall} />
+        <PrivateRoute path='/wall/:id' component={Wall} />
+        <PrivateRoute path='/profile/:id' component={Profile} />
         <Route exact path='/login' render={ () => userService.user ?
           <Redirect to="/" /> :
           <Login />
@@ -21,14 +33,6 @@ class Router extends Component {
         <Route exact path='/register' render={ () => userService.user ?
           <Redirect to="/" /> :
           <Register />
-        }/>
-        <Route path='/wall/:id' render={ () => userService.user ?
-          <Wall /> :
-          <Redirect to="/" />
-        }/>
-        <Route path='/profile/:id' render={ () => userService.user ?
-          <Profile /> :
-          <Redirect to="/" />
         }/>
       </Switch>
     )
