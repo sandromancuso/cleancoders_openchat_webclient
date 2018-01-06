@@ -1,42 +1,83 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { shallow } from 'enzyme'
-import Profile from 'components/Profile'
 import userService from 'services/User'
 import postService from 'services/Post'
+import Profile from 'components/Profile'
 import Post from 'components/Post'
-import { aUser, somePosts } from 'testFixtures'
+import { aUser, anotherUser, somePosts } from 'testFixtures'
 
 const router = createMockRouter()
-router.match = {
-  params: {
-    id: 'some params by id'
-  }
-}
 const context = { router }
 
 describe('Profile', () => {
-  let wrapper
+  describe('being of its own user', () => {
+    let wrapper
 
-  beforeEach(async () => {
-    userService.user = aUser
-    postService.getPostsOfUser = jest.fn( () => Promise.resolve(somePosts) )
+    beforeEach( async () => {
+      userService.user = aUser
+      postService.getPostsOfUser = jest.fn( () => Promise.resolve(somePosts) )
+      userService.findById = jest.fn( () => Promise.resolve(aUser) )
+      wrapper = shallow(<Profile/>, { context })
+      await flushPromises()
+      wrapper.update()
+    })
+
+    it('shows the title', () => {
+      const title = wrapper.find('h2')
+
+      expect(title.text()).toBe('Your profile')
+    })
+
+    it('shows the wall of posts of the user', () => {
+      const posts = wrapper.find(Post)
+
+      expect(postService.getPostsOfUser).toHaveBeenCalledWith(aUser.id)
+      expect(posts).toHaveLength(somePosts.length)
+    })
+
+    it('links to its wall', () => {
+      const link = wrapper.find(Link)
+
+      expect(link.prop('to')).toBe('/wall/')
+    })
   })
 
-  it('shows the posts of the user', async () => {
-    wrapper = shallow(<Profile/>)
-    await flushPromises()
-    wrapper.update()
+  describe('using the id of another user in the route', () => {
+    let wrapper
+    let match
 
-    const posts = wrapper.find(Post)
+    beforeEach( async () => {
+      userService.user = aUser
+      postService.getPostsOfUser = jest.fn( () => Promise.resolve(somePosts) )
+      userService.findById = jest.fn( () => Promise.resolve(anotherUser) )
+      match = {
+        params: {
+          id: anotherUser.id
+        }
+      }
+      wrapper = shallow(<Profile match={ match }/>, { context }).setProps({match})
+      await flushPromises()
+      wrapper.update()
+    })
 
-    expect(postService.getPostsOfUser).toHaveBeenCalledWith(aUser.id)
-    expect(posts).toHaveLength(somePosts.length)
-  })
+    it('displays the posts', () => {
+      const posts = wrapper.find(Post)
 
-  it('uses the id in the route', async () => {
-    wrapper = shallow(<Profile/>, { context })
-    await flushPromises()
+      expect(postService.getPostsOfUser).toHaveBeenCalledWith(match.params.id)
+      expect(posts).toHaveLength(somePosts.length)
+    })
 
-    expect(postService.getPostsOfUser).toHaveBeenCalledWith(router.match.params.id)
+    it('shows the user name', () => {
+      const userName = wrapper.find('h2')
+
+      expect(userName.text()).toBe(`${anotherUser.name}'s profile`)
+    })
+
+    it('links to its wall', () => {
+      const link = wrapper.find(Link)
+
+      expect(link.prop('to')).toBe('/wall/' + anotherUser.id)
+    })
   })
 })
