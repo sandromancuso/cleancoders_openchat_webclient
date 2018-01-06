@@ -45,7 +45,7 @@ class PostCreator extends Component {
             </div>
 
             <div className="col col-sm-2">
-              <button className="btn-sm btn-lg btn-primary btn-block" type="submit">
+              <button className="btn btn-sm btn-primary btn-block" type="submit">
                 <i className="fa fa-comment-o"></i> Create Post
               </button>
             </div>
