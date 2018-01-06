@@ -50,8 +50,8 @@ class Wall extends Component {
     )
   }
 
-  async setList () {
-    const posts = await postService.getWallOfUser(this.state.user.id)
+  async setList (id) {
+    const posts = await postService.getWallOfUser(id)
 
     const list = await Promise.all(
       posts.map( async post => {
@@ -63,20 +63,26 @@ class Wall extends Component {
     await this.setState({ list: list })
   }
 
-  async componentWillMount () {
-    await this.setState({ user: userService.user })
-    await this.setList()
-  }
-
-  async componentWillReceiveProps (props) {
-    const id = props.match.params.id
-    if (this.state.user.id === id) return null
-
+  async buildState (id) {
     const user = id ?
       await userService.findById(id) :
       userService.user
     await this.setState({ user: user })
-    await this.setList()
+    await this.setList(user.id)
+  }
+
+  async componentDidMount () {
+    const hasParams = this.props && this.props.match && this.props.match.params
+    const id = hasParams ?
+      this.props.match.params.id :
+      null
+
+    await this.buildState(id)
+  }
+
+  async componentWillReceiveProps (props) {
+    const id = props.match.params.id
+    await this.buildState(id)
   }
 }
 

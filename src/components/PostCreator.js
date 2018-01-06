@@ -18,6 +18,7 @@ class PostCreator extends Component {
   async handleSubmit (event) {
     event.preventDefault()
     await postService.createPostByUser(userService.user.id, this.state.text)
+    this.setState({ text: '' })
     this.context.router.history.push('/')
   }
 

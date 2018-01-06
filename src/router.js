@@ -24,7 +24,9 @@ class Router extends Component {
     return (
       <Switch>
         <PrivateRoute exact path='/' component={Wall} />
+        <PrivateRoute exact path='/wall' component={Wall} />
         <PrivateRoute path='/wall/:id' component={Wall} />
+        <PrivateRoute exact path='/profile' component={Profile} />
         <PrivateRoute path='/profile/:id' component={Profile} />
         <Route exact path='/login' render={ () => userService.user ?
           <Redirect to="/" /> :
