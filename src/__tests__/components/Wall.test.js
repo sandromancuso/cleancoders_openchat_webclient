@@ -9,44 +9,65 @@ import PostCreator from 'components/PostCreator'
 import { aUser, anotherUser, somePosts } from 'testFixtures'
 
 describe('Wall', () => {
-  let wrapper
+  describe('being of its own user', () => {
+    let wrapper
 
-  beforeEach(async () => {
-    userService.user = aUser
-    postService.getWallOfUser = jest.fn( () => Promise.resolve(somePosts) )
-    userService.findById = jest.fn( () => Promise.resolve(aUser) )
-    wrapper = shallow(<Wall/>)
-    await flushPromises()
-    wrapper.update()
+    beforeEach(async () => {
+      userService.user = aUser
+      postService.getWallOfUser = jest.fn( () => Promise.resolve(somePosts) )
+      userService.findById = jest.fn( () => Promise.resolve(aUser) )
+      wrapper = shallow(<Wall/>)
+      await flushPromises()
+      wrapper.update()
+    })
+
+    it('can create posts', async () => {
+      expect(wrapper.find(PostCreator)).toHaveLength(1)
+    })
+
+    it('shows the wall of posts of the user', async () => {
+      const posts = wrapper.find(Post)
+      const userName = wrapper.find('h2')
+
+      expect(postService.getWallOfUser).toHaveBeenCalledWith(aUser.id)
+      expect(posts).toHaveLength(somePosts.length)
+      expect(userName.text()).toBe('Your wall')
+    })
   })
 
-  it('can create posts', async () => {
-    expect(wrapper.find(PostCreator)).toHaveLength(1)
-  })
+  describe('using the id of another user in the route', () => {
+    let wrapper
+    let match
 
-  it('shows the wall of posts of the user', async () => {
-    const posts = wrapper.find(Post)
-    const userName = wrapper.find('h2')
-
-    expect(postService.getWallOfUser).toHaveBeenCalledWith(aUser.id)
-    expect(posts).toHaveLength(somePosts.length)
-    expect(userName.text()).toBe('Your wall')
-  })
-
-  it('uses the id in the route', async () => {
-    const match = {
-      params: {
-        id: anotherUser.id
+    beforeEach( async () => {
+      userService.user = aUser
+      postService.getWallOfUser = jest.fn( () => Promise.resolve(somePosts) )
+      userService.findById = jest.fn( () => Promise.resolve(anotherUser) )
+      match = {
+        params: {
+          id: anotherUser.id
+        }
       }
-    }
-    userService.findById = jest.fn( () => Promise.resolve(anotherUser) )
-    wrapper.setProps({ match })
-    await flushPromises()
-    wrapper.update()
+      wrapper = shallow(<Wall/>).setProps({match})
+      await flushPromises()
+      wrapper.update()
+    })
 
-    const userName = wrapper.find('h2')
+    it('displays the posts', () => {
+      const posts = wrapper.find(Post)
 
-    expect(postService.getWallOfUser).toHaveBeenCalledWith(match.params.id)
-    expect(userName.text()).toBe(`${anotherUser.name}'s wall`)
+      expect(postService.getWallOfUser).toHaveBeenCalledWith(match.params.id)
+      expect(posts).toHaveLength(somePosts.length)
+    })
+
+    it('shows the user name', () => {
+      const userName = wrapper.find('h2')
+
+      expect(userName.text()).toBe(`${anotherUser.name}'s wall`)
+    })
+
+    it('cannot create posts', () => {
+      expect(wrapper.find(PostCreator)).toHaveLength(0)
+    })
   })
 })

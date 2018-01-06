@@ -30,13 +30,16 @@ class Wall extends Component {
             `${this.state.user.name}'s wall`
           }
         </h2>
-        <PostCreator />
+        {this.isOwnWall() ?
+          <PostCreator /> :
+          null
+        }
         {this.list()}
       </div>
     )
   }
 
-  async setPostList () {
+  async setList () {
     const posts = await postService.getWallOfUser(this.state.user.id)
 
     const list = await Promise.all(
@@ -51,14 +54,18 @@ class Wall extends Component {
 
   async componentWillMount () {
     await this.setState({ user: userService.user })
-    await this.setPostList()
+    await this.setList()
   }
 
-  async componentWillUpdate (props) {
-    if (!props.match || !props.match.params.id || this.state.user.id === props.match.params.id) return null
-    const user = await userService.findById(props.match.params.id)
+  async componentWillReceiveProps (props) {
+    const id = props.match.params.id
+    if (this.state.user.id === id) return null
+
+    const user = id ?
+      await userService.findById(id) :
+      userService.user
     await this.setState({ user: user })
-    await this.setPostList()
+    await this.setList()
   }
 }
 
