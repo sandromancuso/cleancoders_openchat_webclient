@@ -3,11 +3,11 @@
 exports[`Footer renders 1`] = `
 
 <footer class="footer">
-  <span>
+  <div class="container text-muted text-right">
     Crafted with
-    <i class="fa fa-heart">
+    <i class="fa fa-heart text-danger">
     </i>
-  </span>
+  </div>
 </footer>
 
 `;
