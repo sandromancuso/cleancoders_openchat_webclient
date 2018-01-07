@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { shallow } from 'enzyme'
 import Register from 'components/Register'
 import userService from 'services/User'
+jest.mock('sweetalert')
+import swal from 'sweetalert'
 
 const state = {
   userName: 'aUserName',
@@ -20,17 +22,30 @@ describe('Register', () => {
     wrapper = shallow(<Register/>, { context }).setState(state) }
   )
 
-  it('registers user', async () => {
+  it('registers the user', async () => {
     userService.register = jest.fn(() => Promise.resolve())
 
     wrapper.find('form').simulate('submit',
       { preventDefault: () => {} }
     )
-
     await flushPromises()
 
     expect(userService.register).toHaveBeenCalledWith(state)
     expect(router.history.push).toHaveBeenCalledWith('/')
+  })
+
+  it('handles authentication errors', async () => {
+    swal = jest.fn()
+    const anError = new Error('some register error')
+    userService.register = jest.fn(() => Promise.reject(anError))
+
+    wrapper.find('form').simulate('submit',
+      { preventDefault: () => {} }
+    )
+    await flushPromises()
+
+    expect(userService.register).toHaveBeenCalledWith(state)
+    expect(swal).toHaveBeenCalledWith('Error', anError.message, 'error')
   })
 
   it('links to login', () => {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import swal from 'sweetalert'
 import PropTypes from 'prop-types'
 import userService from 'services/User'
 import postService from 'services/Post'
@@ -17,9 +18,14 @@ class PostCreator extends Component {
 
   async handleSubmit (event) {
     event.preventDefault()
-    await postService.createPostByUser(userService.user.id, this.state.text)
-    this.setState({ text: '' })
-    this.context.router.history.push('/')
+    try {
+      await postService.createPostByUser(userService.user.id, this.state.text)
+      this.setState({ text: '' })
+      this.context.router.history.push('/')
+    }
+    catch (error) {
+      swal('Error', error.message, 'error')
+    }
   }
 
   render() {

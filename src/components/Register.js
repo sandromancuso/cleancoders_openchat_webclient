@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import swal from 'sweetalert'
 import { Link } from 'react-router-dom'
 import userService from 'services/User'
 
@@ -19,8 +20,13 @@ class Register extends Component {
 
   async handleSubmit (event) {
     event.preventDefault()
-    await userService.register(this.state)
-    this.context.router.history.push('/')
+    try {
+      await userService.register(this.state)
+      this.context.router.history.push('/')
+    }
+    catch (error) {
+      swal('Error', error.message, 'error')
+    }
   }
 
   render() {

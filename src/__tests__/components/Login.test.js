@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { shallow } from 'enzyme'
 import Login from 'components/Login'
 import userService from 'services/User'
+jest.mock('sweetalert')
+import swal from 'sweetalert'
 
 const state = {
   userName: 'aUserName',
@@ -25,11 +27,24 @@ describe('Login', () => {
     wrapper.find('form').simulate('submit',
       { preventDefault: () => {} }
     )
-
     await flushPromises()
 
     expect(userService.login).toHaveBeenCalledWith(state)
     expect(router.history.push).toHaveBeenCalledWith('/')
+  })
+
+  it('handles authentication errors', async () => {
+    swal = jest.fn()
+    const anError = new Error('some login error')
+    userService.login = jest.fn(() => Promise.reject(anError))
+
+    wrapper.find('form').simulate('submit',
+      { preventDefault: () => {} }
+    )
+    await flushPromises()
+
+    expect(userService.login).toHaveBeenCalledWith(state)
+    expect(swal).toHaveBeenCalledWith('Error', anError.message, 'error')
   })
 
   it('links to register', () => {
