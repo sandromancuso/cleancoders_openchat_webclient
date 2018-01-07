@@ -27,7 +27,7 @@ class Register extends Component {
     return (
       <div className="container">
         <div className="row justify-content-md-center">
-          <form className="form-signin bg-light border rounded p-5 col-sm-6"
+          <form className="bg-light border rounded p-5 col-sm-6 mb-1 mt-5"
             onSubmit={this.handleSubmit.bind(this)}
           >
             <h2 className="form-signin-heading">Register</h2>

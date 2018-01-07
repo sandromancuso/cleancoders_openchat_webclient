@@ -4,7 +4,9 @@ class Footer extends Component {
   render() {
     return (
       <footer className="footer">
-        <span>Crafted with <i className="fa fa-heart"></i></span>
+        <div className="container text-muted text-right">
+          Crafted with <i className="fa fa-heart text-danger"></i>
+        </div>
       </footer>
     )
   }
