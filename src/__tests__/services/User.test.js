@@ -1,8 +1,6 @@
 import User from 'domain/User'
 import userService from 'services/User'
 
-const userData = { user: 'a user', password: 'a password' }
-
 function expectUserDefined (user) {
   expect(user).toBeInstanceOf(User)
   expect(user.id).toBeDefined()
@@ -10,8 +8,19 @@ function expectUserDefined (user) {
   expect(user.about).toBeDefined()
 }
 
+const randomUserData = () => ({ userName: 'user'+Math.random(), password: 'aPassword', about: 'an about' })
+
 describe('UserService', () => {
+  let userData
+
+  beforeEach( () => {
+    userData = randomUserData()
+  })
+
   it('logs in', async () => {
+    await userService.register(userData)
+    await userService.logout()
+
     const result = await userService.login(userData)
 
     expectUserDefined(result)
@@ -28,7 +37,9 @@ describe('UserService', () => {
   })
 
   it('logs out', async () => {
+    localStorage.clear.mockClear()
     await userService.register(userData)
+
     await userService.logout()
 
     expect(userService.user).toBe(null)
@@ -36,29 +47,38 @@ describe('UserService', () => {
   })
 
   it('follows', async () => {
-    const toFollow = { user: 'a user', password: 'a password', about: 'an about' }
-
+    const toFollow = await userService.register(randomUserData())
     await userService.register(userData)
-    await userService.register(toFollow)
 
-    const result = await userService.follow(userData, toFollow)
-
-    expect(result).toBe(true)
+    await userService.follow(toFollow.id)
   })
 
   it('gets users', async () => {
+    const user = await userService.register(userData)
+
     const result = await userService.getUsers()
 
     expect(result).toBeInstanceOf(Array)
-    expectUserDefined(result[0])
+    expect(result).toContainEqual(user)
   })
 
   it('finds users by Id', async () => {
-    const id = '316h3543-e89b-12d3-a456-426655440000'
+    const user = await userService.register(userData)
 
-    const result = await userService.findById(id)
+    const result = await userService.findById(user.id)
 
-    expectUserDefined(result)
+    expect(result).toEqual(user)
+  })
+
+  it('gets followees', async () => {
+    const followee = await userService.register(randomUserData())
+    await userService.register(userData)
+    await userService.follow(followee.id)
+
+    const result = await userService.getFollowees()
+
+    expect(result).toBeInstanceOf(Array)
+    expect(result).toContainEqual(followee)
   })
 
 })
