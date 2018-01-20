@@ -1,9 +1,8 @@
 export default class Post {
-  constructor({ id, userId, text, date, time }) {
+  constructor({ id, userId, text, dateTime }) {
     this.id = id
     this.userId = userId
     this.text = text
-    this.date = date
-    this.time = time
+    this.dateTime = dateTime
   }
 }

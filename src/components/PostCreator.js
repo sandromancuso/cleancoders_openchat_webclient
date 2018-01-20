@@ -35,7 +35,7 @@ class PostCreator extends Component {
             onSubmit={this.handleSubmit.bind(this)}
           >
           <div className="row align-items-center justify-content-md-center m-1">
-            <div className="col col-sm-10">
+            <div className="col col-lg-10 col-sm-12">
               <label htmlFor="createPost" className="sr-only">Create a Post</label>
               <textarea
                 id="createPost"
@@ -51,7 +51,7 @@ class PostCreator extends Component {
               />
             </div>
 
-            <div className="col col-sm-2">
+            <div className="col col-lg-2">
               <button className="btn btn-sm btn-primary btn-block" type="submit">
                 <i className="fa fa-comment-o"></i> Create Post
               </button>

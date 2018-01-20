@@ -5,16 +5,14 @@ export const aPost = new Post({
   id: 'an Id',
   userId: 'a user Id',
   text: 'Some text',
-  date: '18/02/2018',
-  time: '11:12:13'
+  dateTime: new Date('2018-03-21T04:34:12Z')
 })
 
 export const anotherPost = new Post({
   id: 'another Id',
   userId: 'another user Id',
   text: 'Some other text',
-  date: '19/02/2017',
-  time: '13:14:15'
+  dateTime: new Date('2017-12-06T10:43:54Z')
 })
 
 export const somePosts = [

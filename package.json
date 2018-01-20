@@ -5,13 +5,14 @@
   "private": true,
   "dependencies": {
     "axios": "^0.17.0",
-    "bootstrap": "^4.0.0-beta.3",
+    "bootstrap": "^4.0.0",
     "font-awesome": "^4.7.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.0.16",
-    "sweetalert": "^2.1.0"
+    "react-scripts": "1.1.0",
+    "sweetalert": "^2.1.0",
+    "timeago-react": "^2.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

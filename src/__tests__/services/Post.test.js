@@ -2,13 +2,21 @@ import Post from 'domain/Post'
 import userService from 'services/User'
 import postService from 'services/Post'
 
-function expectPostDefined (post) {
+function validDate (date) {
+  const now = new Date()
+  expect(date.getFullYear()).toEqual(now.getFullYear())
+  expect(date.getMonth()).toEqual(now.getMonth())
+  expect(date.getDate()).toEqual(now.getDate())
+  expect(date.getHours()).toEqual(now.getHours())
+  expect(date.getMinutes()).toEqual(now.getMinutes())
+}
+
+function expectValidPost (post, userId, text) {
   expect(post).toBeInstanceOf(Post)
   expect(post.id).toBeDefined()
-  expect(post.userId).toBeDefined()
-  expect(post.text).toBeDefined()
-  expect(post.date).toBeDefined()
-  expect(post.time).toBeDefined()
+  expect(post.userId).toEqual(userId)
+  expect(post.text).toEqual(text)
+  validDate(post.dateTime)
 }
 
 const text = 'some text'
@@ -18,7 +26,7 @@ describe('PostService', () => {
   let post
 
   beforeEach( async () => {
-    const userData = { userName: 'user'+Math.random(), password: 'aPassword', about: 'an about' }
+    const userData = { userName: 'user' + Math.random(), password: 'aPassword', about: 'an about' }
     const user = await userService.register(userData)
     userId = user.id
     post = await postService.createPostByUser(userId, text)
@@ -27,7 +35,7 @@ describe('PostService', () => {
   it('creates a user post', async () => {
     const result = await postService.createPostByUser(userId, text)
 
-    expectPostDefined(result)
+    expectValidPost(result, userId, text)
  })
 
   it('gets posts of a user', async () => {

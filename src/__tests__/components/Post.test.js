@@ -1,6 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { Link } from 'react-router-dom'
+import TimeAgo from 'timeago-react'
 import Post from 'components/Post'
 import userService from 'services/User'
 import { aPost, aUser, anotherUser } from 'testFixtures'
@@ -25,8 +26,8 @@ describe('Post', () => {
 
     it('shows post data', () => {
       expect(wrapper.text().includes(aPost.text)).toBe(true)
-      expect(wrapper.text().includes(aPost.date)).toBe(true)
-      expect(wrapper.text().includes(aPost.time)).toBe(true)
+
+      expect(wrapper.find(TimeAgo).prop('datetime')).toEqual(aPost.dateTime)
     })
   })
 
@@ -44,8 +45,7 @@ describe('Post', () => {
 
     it('shows post data', () => {
       expect(wrapper.text().includes(aPost.text)).toBe(true)
-      expect(wrapper.text().includes(aPost.date)).toBe(true)
-      expect(wrapper.text().includes(aPost.time)).toBe(true)
+      expect(wrapper.find(TimeAgo).prop('datetime')).toEqual(aPost.dateTime)
     })
   })
 })
