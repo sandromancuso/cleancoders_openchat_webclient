@@ -1,17 +1,12 @@
 import axios from 'axios'
 import Post from 'domain/Post'
 
-const parseDate = (date, time) => {
-  const [ day, month, year, hours, minutes, seconds ] = date.split('/').concat(time.split('/'))
-  return new Date(`${year}-${month}-${day}T${hours}:${minutes}:${seconds}Z`)
-}
-
 const parse = data => new Post(
   {
     id: data.postId,
     userId: data.userId,
     text: data.text,
-    dateTime: parseDate(data.date, data.time)
+    dateTime: new Date(data.dateTime)
   })
 
 class PostService {
