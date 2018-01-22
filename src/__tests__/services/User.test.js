@@ -95,4 +95,16 @@ describe('UserService', () => {
     expect(result).not.toContainEqual(user)
   })
 
+  it('identifies followees', async () => {
+    const followee = await userService.register(randomUserData())
+    const user = await userService.register(userData)
+
+    const notFollowing = await userService.isFollowee(followee.id)
+    await userService.follow(followee.id)
+    const following = await userService.isFollowee(followee.id)
+
+    expect(notFollowing).toBe(false)
+    expect(following).toBe(true)
+  })
+
 })

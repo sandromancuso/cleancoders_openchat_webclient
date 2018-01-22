@@ -12,12 +12,17 @@ const router = createMockRouter()
 const context = { router }
 
 describe('Wall', () => {
-  describe('being of its own user', () => {
-    let wrapper
+  let wrapper
 
+  beforeEach( () => {
+    userService.user = aUser
+    userService.isFollowee = jest.fn( () => Promise.resolve(false))
+    userService.follow = jest.fn()
+    postService.getWallOfUser = jest.fn( () => Promise.resolve(somePosts) )
+  })
+
+  describe('being of its own user', () => {
     beforeEach( async () => {
-      userService.user = aUser
-      postService.getWallOfUser = jest.fn( () => Promise.resolve(somePosts) )
       userService.findById = jest.fn( () => Promise.resolve(aUser) )
       wrapper = shallow(<Wall/>, { context })
       await flushPromises()
@@ -49,12 +54,9 @@ describe('Wall', () => {
   })
 
   describe('using the id of another user in the route', () => {
-    let wrapper
     let match
 
     beforeEach( async () => {
-      userService.user = aUser
-      postService.getWallOfUser = jest.fn( () => Promise.resolve(somePosts) )
       userService.findById = jest.fn( () => Promise.resolve(anotherUser) )
       match = {
         params: {
@@ -87,6 +89,14 @@ describe('Wall', () => {
       const link = wrapper.find(Link)
 
       expect(link.prop('to')).toBe('/profile/' + anotherUser.id)
+    })
+
+    it('shows follow button when is not a followee', () => {
+      const button = wrapper.find('.follow')
+
+      button.simulate('click')
+
+      expect(userService.follow).toHaveBeenCalledWith(anotherUser.id)
     })
   })
 })

@@ -87,6 +87,11 @@ class UserService {
     const followees = await this.getFollowees()
     return users.filter( userToFollow => !followees.some(followee => followee.id === userToFollow.id) )
   }
+
+  async isFollowee (id) {
+    const followees = await this.getFollowees()
+    return followees.some( user => user.id === id)
+  }
 }
 
 export default new UserService()
