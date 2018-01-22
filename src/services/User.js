@@ -80,6 +80,13 @@ class UserService {
 
     return response.data.map(user => parse(user) )
   }
+
+  async getUsersToFollow () {
+    let users = await this.getUsers()
+    users = users.filter( user => user.id !== this.user.id )
+    const followees = await this.getFollowees()
+    return users.filter( userToFollow => !followees.some(followee => followee.id === userToFollow.id) )
+  }
 }
 
 export default new UserService()

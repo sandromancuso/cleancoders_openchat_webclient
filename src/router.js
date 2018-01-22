@@ -4,6 +4,7 @@ import Wall from 'components/Wall'
 import Profile from 'components/Profile'
 import Login from 'components/Login'
 import Register from 'components/Register'
+import FindUsersToFollow from 'components/FindUsersToFollow'
 import userService from 'services/User'
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -28,6 +29,7 @@ class Router extends Component {
         <PrivateRoute path='/wall/:id' component={Wall} />
         <PrivateRoute exact path='/profile' component={Profile} />
         <PrivateRoute path='/profile/:id' component={Profile} />
+        <PrivateRoute path='/findUsers' component={FindUsersToFollow} />
         <Route exact path='/login' render={ () => userService.user ?
           <Redirect to="/" /> :
           <Login />

@@ -1,5 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import { Link } from 'react-router-dom'
 import Header from 'components/Header'
 import userService from 'services/User'
 import { aUser } from 'testFixtures'
@@ -13,6 +14,12 @@ describe('Header', () => {
   beforeEach(() => {
     userService.user = aUser
     wrapper = shallow(<Header />, { context })
+  })
+
+  it('links to the home', () => {
+    const link = wrapper.find(Link).at(0)
+
+    expect(link.prop('to')).toBe('/')
   })
 
   it('has the logout when the user is logged', () => {
@@ -30,4 +37,9 @@ describe('Header', () => {
     expect(wrapper.find('.logout')).toHaveLength(1)
   })
 
+  it('allows to find users to follow', () => {
+    const link = wrapper.find(Link).at(1)
+
+    expect(link.prop('to')).toBe('/findUsers')
+  })
 })
