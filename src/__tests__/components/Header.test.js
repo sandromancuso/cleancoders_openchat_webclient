@@ -23,7 +23,12 @@ describe('Header', () => {
   })
 
   it('has the logout when the user is logged', () => {
-    expect(wrapper.find('.logout')).toHaveLength(1)
+    userService.logout = jest.fn()
+    const button = wrapper.find('.logout')
+
+    button.simulate('click')
+
+    expect(userService.logout).toHaveBeenCalled()
   })
 
   it('does not have the logout when the user is not logged', () => {
