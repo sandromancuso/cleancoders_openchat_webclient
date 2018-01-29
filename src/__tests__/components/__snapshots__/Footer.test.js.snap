@@ -2,11 +2,23 @@
 
 exports[`Footer renders 1`] = `
 
-<footer class="footer">
-  <div class="container text-muted text-right">
-    Crafted with
-    <i class="fa fa-heart text-danger">
-    </i>
+<footer class="footer text-muted">
+  <div class="container">
+    <div class="row">
+      <div class="col mr-auto">
+        <a href="https://codurance.com/"
+           target="_blank"
+           rel="noopener noreferrer"
+        >
+          Codurance
+        </a>
+      </div>
+      <div class="col text-right">
+        Crafted with
+        <i class="fa fa-heart text-danger">
+        </i>
+      </div>
+    </div>
   </div>
 </footer>
 
