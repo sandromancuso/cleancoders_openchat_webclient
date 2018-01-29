@@ -15,8 +15,11 @@
     "timeago-react": "^2.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start-js": "react-scripts start",
+    "start": "npm-run-all -p watch-css start-js",
+    "build-css": "node-sass-chokidar --include-path ./src/styles/scss --include-path ./node_modules src/styles/scss/ -o src/styles/css",
+    "build": "npm run build-css && react-scripts build",
+    "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src/styles/scss/ --include-path ./node_modules src/styles/scss/ -o src/styles/css --watch --recursive",
     "unit": "react-scripts test components --env=jsdom",
     "integration": "react-scripts test services --env=jsdom",
     "test": "react-scripts test services components --env=jsdom",
@@ -26,6 +29,8 @@
     "enzyme": "^3.1.0",
     "enzyme-adapter-react-16": "^1.0.3",
     "jest-serializer-html": "^5.0.0",
+    "node-sass-chokidar": "^0.0.3",
+    "npm-run-all": "^4.1.2",
     "react-test-renderer": "^16.0.0"
   }
 }
