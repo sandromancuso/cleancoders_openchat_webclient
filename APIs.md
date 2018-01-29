@@ -1,5 +1,7 @@
 # APIs
 
+**Running the app: mvn build exec:java**
+
 Here is a list of the APIs that need to be implemented by OpenChat.
 
 ## Register New User
@@ -13,7 +15,7 @@ POST - openchat/registration
 
 **Success**
 Status CREATED - 201
-Reponse:
+Response:
 {
     "userId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 	"username" : "Alice",
@@ -34,7 +36,7 @@ POST - openchat/login
 
 **Success**
 Status OK - 200
-Reponse:
+Response:
 {
     "userId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 	"username" : "Alice",
@@ -57,29 +59,27 @@ Status CREATED - 201
 {
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"userId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-	"text" : "Anything interesting happening tonight?",
- 	"date" : "10/01/2018",
-	"time" : "11:30:00"
+	"text" : "Hello everyone. I'm Alice.",
+ 	"dateTime" : "2018-01-10T11:30:00Z"
 }
 
 **Failure**
-Status: BAD_REQUEST - 400
+Status: BAD_REQUEST - 400 (in case user does not exist)
+Response: "User does not exit."
 
-## Retrive Posts (User timeline)
+## Retrieve Posts (User timeline)
 
 GET - openchat/user/<userId>/timeline
 [{
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"userId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"text" : "Anything interesting happening tonight?",
- 	"date" : "10/01/2018",
-	"time" : "11:30:00"
+ 	"dateTime" : "2018-01-10T11:30:00Z"
 },{
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"userId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"text" : "Hello everyone. I'm Alice.",
- 	"date" : "10/01/2018",
-	"time" : "09:00:00"
+ 	"dateTime" : "2018-01-10T09:00:00Z"
 }]
 
 **Success**
@@ -87,6 +87,7 @@ Status OK - 200
 
 **Failure**
 Status: BAD_REQUEST - 400 (in case user does not exist)
+Response: "User does not exit."
 
 ## Follow User
 
@@ -97,10 +98,11 @@ POST - openchat/follow
 }
 
 **Success**
-Status OK - 200
+Status OK - 201
 
 **Failure**
 Status: BAD_REQUEST - 400  (in case one of the users doesn't exist)
+Response: "At least one of the users does not exit."
 
 ## Retrieve Wall
 
@@ -109,39 +111,35 @@ GET - openchat/user/<userId>/wall
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"userId" : "BOB_IDxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"text" : "Planning to eat something with Charlie. Wanna join us?",
- 	"date" : "10/01/2018",
-	"time" : "13:25:00"
+ 	"dateTime" : "2018-01-10T13:25:00Z"
 },{
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"userId" : "ALICE_ID-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"text" : "Anything interesting happening tonight?",
- 	"date" : "10/01/2018",
-	"time" : "11:30:00"
+ 	"dateTime" : "2018-01-10T11:30:00Z"
 },{
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"userId" : "BOB_IDxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"text" : "What's up everyone?",
- 	"date" : "10/01/2018",
-	"time" : "11:20:50"
+ 	"dateTime" : "2018-01-10T11:20:00Z"
 },{
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"userId" : "CHARLIE_IDxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"text" : "Hi all. Charlie here.",
- 	"date" : "10/01/2018",
-	"time" : "09:15:34"
+ 	"dateTime" : "2018-01-10T09:15:34Z"
 },{
 	"postId" : "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"userId" : "ALICE_ID-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
 	"text" : "Anything interesting happening tonight?",
- 	"date" : "10/01/2018",
-	"time" : "09:00:00"
+ 	"dateTime" : "2018-01-10T09:00:00Z"
 }]
 
 **Success**
 Status OK - 200
 
 **Failure**
-Status: BAD_REQUEST - 400  (in case user does not exist)
+Status: BAD_REQUEST - 400 (in case user does not exist)
+Response: "User does not exist."
 
 ## Retrieve All Users
 
@@ -154,12 +152,30 @@ GET - openchat/users
 	"userId" : "093f2342-e89b-12d3-a456-426655440000",
 	"username" : "Bob",
 	"about" : "Writer and photographer. Passionate about food and languages."
-	"follows" : "false"
 },{
 	"userId" : "316h3543-e89b-12d3-a456-426655440000",
 	"username" : "Charlie",
 	"about" : "I'm a basketball player, love cycling and meeting new people. "
-	"follows" : "true"
+}]
+
+**Success**
+Status OK - 200
+
+## Retrieve all users followed by another user (followees)
+
+GET - openchat/user/:userId/followees
+[{
+	"userId" : "123e4567-e89b-12d3-a456-426655440000",
+	"username" : "Alice",
+	"about" : "I love playing the pianno and travel.",
+},{
+	"userId" : "093f2342-e89b-12d3-a456-426655440000",
+	"username" : "Bob",
+	"about" : "Writer and photographer. Passionate about food and languages."
+},{
+	"userId" : "316h3543-e89b-12d3-a456-426655440000",
+	"username" : "Charlie",
+	"about" : "I'm a basketball player, love cycling and meeting new people. "
 }]
 
 **Success**
