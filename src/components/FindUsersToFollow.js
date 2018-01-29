@@ -45,9 +45,9 @@ class FindUsersToFollow extends Component {
 
     return (
       <div className="container">
-        <ul>
+        <div>
           {displayUsers}
-        </ul>
+        </div>
       </div>
     )
   }
