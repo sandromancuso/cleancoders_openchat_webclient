@@ -14,11 +14,11 @@ describe('Profile', () => {
   describe('being of its own user', () => {
     let wrapper
 
-    beforeEach( async () => {
+    beforeEach(async () => {
       userService.user = aUser
-      postService.getPostsOfUser = jest.fn( () => Promise.resolve(somePosts) )
-      userService.findById = jest.fn( () => Promise.resolve(aUser) )
-      wrapper = shallow(<Profile/>, { context })
+      postService.getPostsOfUser = jest.fn(() => Promise.resolve(somePosts))
+      userService.findById = jest.fn(() => Promise.resolve(aUser))
+      wrapper = shallow(<Profile />, { context })
       await flushPromises()
       wrapper.update()
     })
@@ -47,16 +47,16 @@ describe('Profile', () => {
     let wrapper
     let match
 
-    beforeEach( async () => {
+    beforeEach(async () => {
       userService.user = aUser
-      postService.getPostsOfUser = jest.fn( () => Promise.resolve(somePosts) )
-      userService.findById = jest.fn( () => Promise.resolve(anotherUser) )
+      postService.getPostsOfUser = jest.fn(() => Promise.resolve(somePosts))
+      userService.findById = jest.fn(() => Promise.resolve(anotherUser))
       match = {
         params: {
           id: anotherUser.id
         }
       }
-      wrapper = shallow(<Profile match={ match }/>, { context }).setProps({match})
+      wrapper = shallow(<Profile match={match} />, { context }).setProps({match})
       await flushPromises()
       wrapper.update()
     })

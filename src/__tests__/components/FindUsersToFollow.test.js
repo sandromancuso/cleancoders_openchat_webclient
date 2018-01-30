@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { shallow } from 'enzyme'
 import userService from 'services/User'
 import FindUsersToFollow from 'components/FindUsersToFollow'
-import { aUser, anotherUser, someUsers } from 'testFixtures'
+import { aUser, someUsers } from 'testFixtures'
 
 const router = createMockRouter()
 const context = { router }
@@ -11,11 +11,11 @@ const context = { router }
 describe('FindUsersToFollow', () => {
   let wrapper
 
-  beforeEach( async () => {
+  beforeEach(async () => {
     userService.user = aUser
     userService.follow = jest.fn()
-    userService.getUsersToFollow = jest.fn( () => Promise.resolve(someUsers) )
-    wrapper = shallow(<FindUsersToFollow/>, { context })
+    userService.getUsersToFollow = jest.fn(() => Promise.resolve(someUsers))
+    wrapper = shallow(<FindUsersToFollow />, { context })
     await flushPromises()
     wrapper.update()
   })

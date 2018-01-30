@@ -21,7 +21,7 @@ class UserService {
     }
     const response = await axios.post(
       `${process.env.REACT_APP_API_URL}registration`,
-      JSON.stringify(request) )
+      JSON.stringify(request))
 
     this.user = parse(response.data)
     localStorage.setItem('user', JSON.stringify(this.user))
@@ -30,11 +30,11 @@ class UserService {
 
   async login ({ userName, password }) {
     const request = {
-      username : userName,
-      password : password
+      username: userName,
+      password: password
     }
     const response = await axios.post(`${process.env.REACT_APP_API_URL}login`,
-      JSON.stringify(request) )
+      JSON.stringify(request))
 
     this.user = parse(response.data)
     localStorage.setItem('user', JSON.stringify(this.user))
@@ -48,9 +48,9 @@ class UserService {
 
   async getUsers () {
     const response = await axios.get(`${process.env.REACT_APP_API_URL}users`)
-    const users = response.data.map(user => parse(user) )
+    const users = response.data.map(user => parse(user))
 
-    this.usersHash = users.reduce( (map, user) => {
+    this.usersHash = users.reduce((map, user) => {
       map[user.id] = user
       return map
     }, {})
@@ -78,19 +78,19 @@ class UserService {
   async getFollowees () {
     const response = await axios.get(`${process.env.REACT_APP_API_URL}user/${this.user.id}/followees`)
 
-    return response.data.map(user => parse(user) )
+    return response.data.map(user => parse(user))
   }
 
   async getUsersToFollow () {
     let users = await this.getUsers()
-    users = users.filter( user => user.id !== this.user.id )
+    users = users.filter(user => user.id !== this.user.id)
     const followees = await this.getFollowees()
-    return users.filter( userToFollow => !followees.some(followee => followee.id === userToFollow.id) )
+    return users.filter(userToFollow => !followees.some(followee => followee.id === userToFollow.id))
   }
 
   async isFollowee (id) {
     const followees = await this.getFollowees()
-    return followees.some( user => user.id === id)
+    return followees.some(user => user.id === id)
   }
 }
 

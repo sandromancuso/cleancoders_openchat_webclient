@@ -4,9 +4,11 @@ import { Link } from 'react-router-dom'
 import userService from 'services/User'
 
 class FindUsersToFollow extends Component {
-
-  state = {
-    users: []
+  constructor (props) {
+    super(props)
+    this.state = {
+      users: []
+    }
   }
 
   static contextTypes = {
@@ -20,31 +22,31 @@ class FindUsersToFollow extends Component {
   }
 
   render () {
-    const displayUsers = this.state.users.map( user => (
-      <div className="user card my-3" key={user.id}>
-        <div className="card-header">
-          <div className="row justify-content-between">
-            <div className="col-6">
+    const displayUsers = this.state.users.map(user => (
+      <div className='user card my-3' key={user.id}>
+        <div className='card-header'>
+          <div className='row justify-content-between'>
+            <div className='col-6'>
               <Link to={`/wall/${user.id}`}>{user.name}</Link>
             </div>
-            <div className="col-6 text-right text-muted">
+            <div className='col-6 text-right text-muted'>
               <button
-                className="btn btn-sm btn-primary"
+                className='btn btn-sm btn-primary'
                 onClick={() => this.followUser(user.id)}
               >
-                <i className="fa fa-plus"></i> Follow
+                <i className='fa fa-plus' /> Follow
               </button>
             </div>
           </div>
         </div>
-        <div className="card-body">
+        <div className='card-body'>
           {user.about}
         </div>
       </div>
     ))
 
     return (
-      <div className="container">
+      <div className='container'>
         <div>
           {displayUsers}
         </div>

@@ -8,29 +8,29 @@ class Header extends Component {
     router: PropTypes.object.isRequired
   }
 
-  logout() {
+  logout () {
     userService.logout()
     this.context.router.history.push('/')
   }
 
-  render() {
+  render () {
     const button = (
       <button
-        className="nav-item logout btn btn-outline-light"
+        className='nav-item logout btn btn-outline-light'
         onClick={this.logout.bind(this)}
       >
-        <i className="fa fa-sign-out" /> Log Out
+        <i className='fa fa-sign-out' /> Log Out
       </button>)
 
-    const usersToFollow = <Link className="nav-item nav-link mr-3" to="/findUsers">Follow users</Link>
+    const usersToFollow = <Link className='nav-item nav-link mr-3' to='/findUsers'>Follow users</Link>
 
     return (
-      <nav className="navbar navbar-expand navbar-dark bg-primary fixed-top">
-        <Link to="/" className="navbar-brand">OpenChat</Link>
+      <nav className='navbar navbar-expand navbar-dark bg-primary fixed-top'>
+        <Link to='/' className='navbar-brand'>OpenChat</Link>
 
-        <div className="navbar-nav ml-auto">
-          {userService.user? usersToFollow : null}
-          {userService.user? button : null}
+        <div className='navbar-nav ml-auto'>
+          {userService.user ? usersToFollow : null}
+          {userService.user ? button : null}
         </div>
       </nav>
     )

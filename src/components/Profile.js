@@ -6,7 +6,7 @@ import userService from 'services/User'
 import postService from 'services/Post'
 
 class Profile extends Component {
-  constructor(props, context) {
+  constructor (props, context) {
     super(props, context)
     this.state = {
       user: {},
@@ -19,7 +19,7 @@ class Profile extends Component {
   }
 
   list () {
-    return this.state.list.map( ({ post, user }) => <Post key={post.id} post={post} user={user}/>)
+    return this.state.list.map(({ post, user }) => <Post key={post.id} post={post} user={user} />)
   }
 
   isOwnProfile () {
@@ -28,16 +28,16 @@ class Profile extends Component {
 
   render () {
     return (
-      <div className="container">
+      <div className='container'>
         <h2>
-          {this.isOwnProfile() ?
-            'Your profile' :
-            `${this.state.user.name}'s profile`
+          {this.isOwnProfile()
+            ? 'Your profile'
+            : `${this.state.user.name}'s profile`
           }
         </h2>
-        {this.isOwnProfile() ?
-          <Link to={`/wall/`}>See wall</Link> :
-          <Link to={`/wall/${this.state.user.id}`}>See {this.state.user.name}'s wall</Link>
+        {this.isOwnProfile()
+          ? <Link to={`/wall/`}>See wall</Link>
+          : <Link to={`/wall/${this.state.user.id}`}>See {this.state.user.name}'s wall</Link>
         }
         <hr />
         {this.list()}
@@ -49,7 +49,7 @@ class Profile extends Component {
     const posts = await postService.getPostsOfUser(id)
 
     const list = await Promise.all(
-      posts.map( async post => {
+      posts.map(async post => {
         const user = await userService.findById(post.userId)
         return { post, user }
       })
@@ -59,18 +59,18 @@ class Profile extends Component {
   }
 
   async buildState (id) {
-    const user = id ?
-      await userService.findById(id) :
-      userService.user
+    const user = id
+      ? await userService.findById(id)
+      : userService.user
     await this.setState({ user: user })
     await this.setList(user.id)
   }
 
   async componentDidMount () {
     const hasParams = this.props && this.props.match && this.props.match.params
-    const id = hasParams ?
-      this.props.match.params.id :
-      null
+    const id = hasParams
+      ? this.props.match.params.id
+      : null
 
     await this.buildState(id)
   }

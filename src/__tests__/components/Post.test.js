@@ -13,7 +13,7 @@ describe('Post', () => {
   let wrapper
 
   describe('of another poster', () => {
-    beforeEach( () => {
+    beforeEach(() => {
       userService.user = aUser
       wrapper = shallow(<Post post={aPost} user={anotherUser} />, { context })
     })
@@ -32,7 +32,7 @@ describe('Post', () => {
   })
 
   describe('of the own poster', () => {
-    beforeEach( () => {
+    beforeEach(() => {
       userService.user = aUser
       wrapper = shallow(<Post post={aPost} user={aUser} />, { context })
     })

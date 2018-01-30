@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import { shallow } from 'enzyme'
 import Register from 'components/Register'
 import userService from 'services/User'
-jest.mock('sweetalert')
 import swal from 'sweetalert'
+jest.mock('sweetalert')
 
 const state = {
   userName: 'aUserName',
@@ -19,7 +19,8 @@ describe('Register', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallow(<Register/>, { context }).setState(state) }
+    wrapper = shallow(<Register />, { context }).setState(state)
+  }
   )
 
   it('registers the user', async () => {

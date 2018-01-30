@@ -10,18 +10,18 @@ import userService from 'services/User'
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={props => (
     userService.user ? (
-      <Component {...props}/>
+      <Component {...props} />
     ) : (
       <Redirect to={{
         pathname: '/login',
         state: { from: props.location }
-      }}/>
+      }} />
     )
-  )}/>
+  )} />
 )
 
 class Router extends Component {
-  render() {
+  render () {
     return (
       <Switch>
         <PrivateRoute exact path='/' component={Wall} />
@@ -30,14 +30,14 @@ class Router extends Component {
         <PrivateRoute exact path='/profile' component={Profile} />
         <PrivateRoute path='/profile/:id' component={Profile} />
         <PrivateRoute path='/findUsers' component={FindUsersToFollow} />
-        <Route exact path='/login' render={ () => userService.user ?
-          <Redirect to="/" /> :
-          <Login />
-        }/>
-        <Route exact path='/register' render={ () => userService.user ?
-          <Redirect to="/" /> :
-          <Register />
-        }/>
+        <Route exact path='/login' render={() => userService.user
+          ? <Redirect to='/' />
+          : <Login />
+        } />
+        <Route exact path='/register' render={() => userService.user
+          ? <Redirect to='/' />
+          : <Register />
+        } />
       </Switch>
     )
   }

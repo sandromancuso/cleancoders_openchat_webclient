@@ -25,7 +25,7 @@ describe('PostService', () => {
   let userId
   let post
 
-  beforeEach( async () => {
+  beforeEach(async () => {
     const userData = { userName: 'user' + Math.random(), password: 'aPassword', about: 'an about' }
     const user = await userService.register(userData)
     userId = user.id
@@ -36,7 +36,7 @@ describe('PostService', () => {
     const result = await postService.createPostByUser(userId, text)
 
     expectValidPost(result, userId, text)
- })
+  })
 
   it('gets posts of a user', async () => {
     const result = await postService.getPostsOfUser(userId)

@@ -5,20 +5,19 @@ import userService from 'services/User'
 import TimeAgo from 'timeago-react'
 
 const Post = ({ post, user }) => {
-
   const isOwnPost = user.id === userService.user.id
 
   return (
-    <div className="card my-3">
-      <div className="card-header">
-        <div className="row justify-content-between">
-          <div className="col-6">
-            {isOwnPost ?
-              <Link to='/wall'>You</Link> :
-              <Link to={`/wall/${user.id}`}>{user.name}</Link>
+    <div className='card my-3'>
+      <div className='card-header'>
+        <div className='row justify-content-between'>
+          <div className='col-6'>
+            {isOwnPost
+              ? <Link to='/wall'>You</Link>
+              : <Link to={`/wall/${user.id}`}>{user.name}</Link>
             }
           </div>
-          <div className="col-6 text-right text-muted">
+          <div className='col-6 text-right text-muted'>
             <TimeAgo
               datetime={post.dateTime}
               locale='en_UK'
@@ -26,7 +25,7 @@ const Post = ({ post, user }) => {
           </div>
         </div>
       </div>
-      <div className="card-body">
+      <div className='card-body'>
         {post.text}
       </div>
     </div>

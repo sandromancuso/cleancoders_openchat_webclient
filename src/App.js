@@ -5,17 +5,17 @@ import Footer from 'components/Footer'
 import Router from 'router'
 
 class App extends Component {
-  render() {
+  render () {
     return (
-    <BrowserRouter>
-      <div className="App">
-        <Header></Header>
-        <main role="main" className="main">
-          <Router></Router>
-        </main>
-        <Footer></Footer>
-      </div>
-    </BrowserRouter>
+      <BrowserRouter>
+        <div className='App'>
+          <Header />
+          <main role='main' className='main'>
+            <Router />
+          </main>
+          <Footer />
+        </div>
+      </BrowserRouter>
     )
   }
 }

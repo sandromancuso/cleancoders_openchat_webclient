@@ -8,12 +8,12 @@ function expectUserDefined (user) {
   expect(user.about).toBeDefined()
 }
 
-const randomUserData = () => ({ userName: 'user'+Math.random(), password: 'aPassword', about: 'an about' })
+const randomUserData = () => ({ userName: 'user' + Math.random(), password: 'aPassword', about: 'an about' })
 
 describe('UserService', () => {
   let userData
 
-  beforeEach( () => {
+  beforeEach(() => {
     userData = randomUserData()
   })
 
@@ -97,7 +97,7 @@ describe('UserService', () => {
 
   it('identifies followees', async () => {
     const followee = await userService.register(randomUserData())
-    const user = await userService.register(userData)
+    await userService.register(userData)
 
     const notFollowing = await userService.isFollowee(followee.id)
     await userService.follow(followee.id)
@@ -106,5 +106,4 @@ describe('UserService', () => {
     expect(notFollowing).toBe(false)
     expect(following).toBe(true)
   })
-
 })

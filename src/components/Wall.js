@@ -7,7 +7,7 @@ import userService from 'services/User'
 import postService from 'services/Post'
 
 class Wall extends Component {
-  constructor(props, context) {
+  constructor (props, context) {
     super(props, context)
     this.state = {
       user: {},
@@ -21,7 +21,7 @@ class Wall extends Component {
   }
 
   list () {
-    return this.state.list.map( ({ post, user }) => <Post key={post.id} post={post} user={user}/>)
+    return this.state.list.map(({ post, user }) => <Post key={post.id} post={post} user={user} />)
   }
 
   isOwnWall () {
@@ -36,35 +36,35 @@ class Wall extends Component {
   followButton () {
     if (this.isOwnWall()) return null
 
-    return this.state.showFollow ?
-    (<button className="btn btn-md btn-primary follow" onClick={() => this.follow()}>
-      <i className="fa fa-plus"></i> Follow
-    </button>) :
-    'Following'
+    return this.state.showFollow
+    ? (<button className='btn btn-md btn-primary follow' onClick={() => this.follow()}>
+      <i className='fa fa-plus' /> Follow
+    </button>)
+    : 'Following'
   }
 
   render () {
     return (
-      <div className="container">
+      <div className='container'>
         <h2>
-          {this.isOwnWall() ?
-            'Your wall' :
-            `${this.state.user.name}'s wall`
+          {this.isOwnWall()
+            ? 'Your wall'
+            : `${this.state.user.name}'s wall`
           }
         </h2>
-        <div className="row">
-          <div className="col-sm-10">
-            {this.isOwnWall() ?
-              <Link to={`/profile/`}>See profile</Link> :
-              <Link to={`/profile/${this.state.user.id}`}>See {this.state.user.name}'s profile</Link>
+        <div className='row'>
+          <div className='col-sm-10'>
+            {this.isOwnWall()
+              ? <Link to={`/profile/`}>See profile</Link>
+              : <Link to={`/profile/${this.state.user.id}`}>See {this.state.user.name}'s profile</Link>
             }
           </div>
-          <div className="col-sm-2 text-right">
+          <div className='col-sm-2 text-right'>
             {this.followButton()}
           </div>
         </div>
         <hr />
-        <div className="row">
+        <div className='row'>
           {this.isOwnWall() ? <PostCreator /> : null}
         </div>
         {this.list()}
@@ -73,13 +73,13 @@ class Wall extends Component {
   }
 
   async buildState (id) {
-    const user = id ?
-      await userService.findById(id) :
-      userService.user
-    const showFollow = !this.isOwnWall() && ! await userService.isFollowee(user.id)
+    const user = id
+      ? await userService.findById(id)
+      : userService.user
+    const showFollow = !this.isOwnWall() && !await userService.isFollowee(user.id)
     const posts = await postService.getWallOfUser(user.id)
     const list = await Promise.all(
-      posts.map( async post => {
+      posts.map(async post => {
         const user = await userService.findById(post.userId)
         return { post, user }
       })
@@ -94,9 +94,9 @@ class Wall extends Component {
 
   async componentDidMount () {
     const hasParams = this.props && this.props.match && this.props.match.params
-    const id = hasParams ?
-      this.props.match.params.id :
-      null
+    const id = hasParams
+      ? this.props.match.params.id
+      : null
 
     await this.buildState(id)
   }

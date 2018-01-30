@@ -12,24 +12,24 @@ const parse = data => new Post(
 class PostService {
   async createPostByUser (userId, text) {
     const request = {
-      text : text
+      text: text
     }
     const response = await axios.post(`${process.env.REACT_APP_API_URL}user/${userId}/posts`,
-      JSON.stringify(request) )
+      JSON.stringify(request))
 
     return parse(response.data)
   }
 
-  async getPostsOfUser(userId) {
+  async getPostsOfUser (userId) {
     const response = await axios.get(`${process.env.REACT_APP_API_URL}user/${userId}/timeline`)
 
-    return response.data.map( post => parse(post) )
+    return response.data.map(post => parse(post))
   }
 
   async getWallOfUser (userId) {
     const response = await axios.get(`${process.env.REACT_APP_API_URL}user/${userId}/wall`)
 
-    return response.data.map( post => parse(post) )
+    return response.data.map(post => parse(post))
   }
 }
 

@@ -14,17 +14,17 @@ const context = { router }
 describe('Wall', () => {
   let wrapper
 
-  beforeEach( () => {
+  beforeEach(() => {
     userService.user = aUser
-    userService.isFollowee = jest.fn( () => Promise.resolve(false))
+    userService.isFollowee = jest.fn(() => Promise.resolve(false))
     userService.follow = jest.fn()
-    postService.getWallOfUser = jest.fn( () => Promise.resolve(somePosts) )
+    postService.getWallOfUser = jest.fn(() => Promise.resolve(somePosts))
   })
 
   describe('being of its own user', () => {
-    beforeEach( async () => {
-      userService.findById = jest.fn( () => Promise.resolve(aUser) )
-      wrapper = shallow(<Wall/>, { context })
+    beforeEach(async () => {
+      userService.findById = jest.fn(() => Promise.resolve(aUser))
+      wrapper = shallow(<Wall />, { context })
       await flushPromises()
       wrapper.update()
     })
@@ -56,14 +56,14 @@ describe('Wall', () => {
   describe('using the id of another user in the route', () => {
     let match
 
-    beforeEach( async () => {
-      userService.findById = jest.fn( () => Promise.resolve(anotherUser) )
+    beforeEach(async () => {
+      userService.findById = jest.fn(() => Promise.resolve(anotherUser))
       match = {
         params: {
           id: anotherUser.id
         }
       }
-      wrapper = shallow(<Wall/>, { context }).setProps({match})
+      wrapper = shallow(<Wall />, { context }).setProps({match})
       await flushPromises()
       wrapper.update()
     })

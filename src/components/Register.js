@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import userService from 'services/User'
 
 class Register extends Component {
-  constructor(props, context) {
+  constructor (props, context) {
     super(props, context)
     this.state = {
       userName: '',
@@ -23,27 +23,26 @@ class Register extends Component {
     try {
       await userService.register(this.state)
       this.context.router.history.push('/')
-    }
-    catch (error) {
+    } catch (error) {
       swal('Error', error.message, 'error')
     }
   }
 
-  render() {
+  render () {
     return (
-      <div className="container">
-        <div className="row justify-content-md-center">
-          <form className="bg-light border rounded p-5 col-sm-6 mb-1 mt-5"
+      <div className='container'>
+        <div className='row justify-content-md-center'>
+          <form className='bg-light border rounded p-5 col-sm-6 mb-1 mt-5'
             onSubmit={this.handleSubmit.bind(this)}
           >
-            <h2 className="form-signin-heading">Register</h2>
-            <hr/>
-            <label htmlFor="inputUser" className="sr-only">User Name</label>
+            <h2 className='form-signin-heading'>Register</h2>
+            <hr />
+            <label htmlFor='inputUser' className='sr-only'>User Name</label>
             <input
-              type="text"
-              id="inputUser"
-              className="form-control my-2"
-              placeholder="UserName"
+              type='text'
+              id='inputUser'
+              className='form-control my-2'
+              placeholder='UserName'
               required
               autoFocus
               value={this.state.userName}
@@ -53,12 +52,12 @@ class Register extends Component {
                 })
               }}
             />
-            <label htmlFor="inputPassword" className="sr-only">Password</label>
+            <label htmlFor='inputPassword' className='sr-only'>Password</label>
             <input
-              type="password"
-              id="inputPassword"
-              className="form-control my-2"
-              placeholder="Password"
+              type='password'
+              id='inputPassword'
+              className='form-control my-2'
+              placeholder='Password'
               required
               value={this.state.password}
               onChange={(event) => {
@@ -67,12 +66,12 @@ class Register extends Component {
                 })
               }}
             />
-            <label htmlFor="inputAbout" className="sr-only">About</label>
+            <label htmlFor='inputAbout' className='sr-only'>About</label>
             <textarea
-              id="inputAbout"
-              className="form-control my-2"
-              placeholder="Tell us something about yourself"
-              rows="3"
+              id='inputAbout'
+              className='form-control my-2'
+              placeholder='Tell us something about yourself'
+              rows='3'
               required
               value={this.state.about}
               onChange={(event) => {
@@ -81,13 +80,13 @@ class Register extends Component {
                 })
               }}
             />
-            <button className="btn btn-lg btn-primary btn-block" type="submit">
-              <i className="fa fa-user-plus"></i> Register
+            <button className='btn btn-lg btn-primary btn-block' type='submit'>
+              <i className='fa fa-user-plus' /> Register
             </button>
           </form>
         </div>
-        <div className="row justify-content-md-center">
-          <Link to="/login/">Already registered? Log In</Link>
+        <div className='row justify-content-md-center'>
+          <Link to='/login/'>Already registered? Log In</Link>
         </div>
       </div>
     )

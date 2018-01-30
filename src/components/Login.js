@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom'
 import userService from 'services/User'
 
 class Login extends Component {
-  constructor(props, context) {
+  constructor (props, context) {
     super(props, context)
     this.state = {
       userName: '',
-      password: '',
+      password: ''
     }
   }
 
@@ -22,27 +22,26 @@ class Login extends Component {
     try {
       await userService.login(this.state)
       this.context.router.history.push('/')
-    }
-    catch (error) {
+    } catch (error) {
       swal('Error', error.message, 'error')
     }
   }
 
-  render() {
+  render () {
     return (
-      <div className="container">
-        <div className="row justify-content-md-center">
-          <form className="bg-light border rounded p-5 col-sm-6 mt-5 mb-1"
+      <div className='container'>
+        <div className='row justify-content-md-center'>
+          <form className='bg-light border rounded p-5 col-sm-6 mt-5 mb-1'
             onSubmit={this.handleSubmit.bind(this)}
           >
-            <h2 className="form-signin-heading">Please sign in</h2>
-            <hr/>
-            <label htmlFor="inputUser" className="sr-only">User Name</label>
+            <h2 className='form-signin-heading'>Please sign in</h2>
+            <hr />
+            <label htmlFor='inputUser' className='sr-only'>User Name</label>
             <input
-              type="text"
-              id="inputUser"
-              className="form-control my-2"
-              placeholder="UserName"
+              type='text'
+              id='inputUser'
+              className='form-control my-2'
+              placeholder='UserName'
               required
               autoFocus
               value={this.state.userName}
@@ -52,12 +51,12 @@ class Login extends Component {
                 })
               }}
             />
-            <label htmlFor="inputPassword" className="sr-only">Password</label>
+            <label htmlFor='inputPassword' className='sr-only'>Password</label>
             <input
-              type="password"
-              id="inputPassword"
-              className="form-control my-2"
-              placeholder="Password"
+              type='password'
+              id='inputPassword'
+              className='form-control my-2'
+              placeholder='Password'
               required
               value={this.state.password}
               onChange={(event) => {
@@ -67,13 +66,13 @@ class Login extends Component {
               }}
             />
 
-            <button className="btn btn-lg btn-primary btn-block" type="submit">
-              <i className="fa fa-sign-in"></i> Sign in
+            <button className='btn btn-lg btn-primary btn-block' type='submit'>
+              <i className='fa fa-sign-in' /> Sign in
             </button>
           </form>
         </div>
-        <div className="row justify-content-md-center">
-          <Link to="/register/">New to OpenChat? Register</Link>
+        <div className='row justify-content-md-center'>
+          <Link to='/register/'>New to OpenChat? Register</Link>
         </div>
       </div>
     )
