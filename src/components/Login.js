@@ -23,7 +23,7 @@ class Login extends Component {
       await userService.login(this.state)
       this.context.router.history.push('/')
     } catch (error) {
-      swal('Error', error.message, 'error')
+      swal(error.name, error.message, 'error')
     }
   }
 

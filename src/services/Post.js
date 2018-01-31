@@ -1,6 +1,19 @@
 import axios from 'axios'
 import Post from 'domain/Post'
 
+const parseError = response => {
+  const error = new Error(response.data)
+  error.name = response.statusText
+  return error
+}
+
+axios.interceptors.response.use(
+  response => response,
+  error => error.response ?
+    Promise.reject(parseError(error.response)) :
+    Promise.reject(error)
+)
+
 const parse = data => new Post(
   {
     id: data.postId,

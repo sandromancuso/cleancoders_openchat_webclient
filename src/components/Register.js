@@ -24,7 +24,7 @@ class Register extends Component {
       await userService.register(this.state)
       this.context.router.history.push('/')
     } catch (error) {
-      swal('Error', error.message, 'error')
+      swal(error.name, error.message, 'error')
     }
   }
 
