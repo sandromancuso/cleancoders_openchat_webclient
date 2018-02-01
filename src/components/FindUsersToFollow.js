@@ -28,7 +28,7 @@ class FindUsersToFollow extends Component {
 
     return (
       <div className='container'>
-        <div>
+        <div className="row justify-content-md-center users-to-follow">
           {displayUsers}
         </div>
       </div>
