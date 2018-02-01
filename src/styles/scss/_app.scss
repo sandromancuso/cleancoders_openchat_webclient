@@ -24,3 +24,17 @@ body {
   line-height: $footer-size;
   background-color: $gray-100;
 }
+
+.post {
+  border: 1px solid #e5e6e7;
+  border-radius: 5px;
+  padding: 20px;
+  
+  .post-header {
+    margin-bottom: 3px;
+  }
+
+  .post-text {
+    font-size: 20px;
+  }
+}
