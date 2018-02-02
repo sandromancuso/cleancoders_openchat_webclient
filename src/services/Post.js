@@ -9,9 +9,9 @@ const parseError = response => {
 
 axios.interceptors.response.use(
   response => response,
-  error => error.response ?
-    Promise.reject(parseError(error.response)) :
-    Promise.reject(error)
+  error => error.response
+    ? Promise.reject(parseError(error.response))
+    : Promise.reject(error)
 )
 
 const parse = data => new Post(

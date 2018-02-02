@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import userService from 'services/User'
-import UserToFollow from './UserToFollow';
+import UserToFollow from './UserToFollow'
 
 class FindUsersToFollow extends Component {
   constructor (props) {
@@ -20,15 +20,15 @@ class FindUsersToFollow extends Component {
     const users = await userService.getUsersToFollow()
     await this.setState({ users: users })
   }
-  
+
   render () {
     const displayUsers = this.state.users.map(user => (
-      <UserToFollow key={user.id} user={user} onClick={() => this.followUser(user.id)}/>
+      <UserToFollow key={user.id} user={user} onClick={() => this.followUser(user.id)} />
     ))
 
     return (
       <div className='container'>
-        <div className="row justify-content-md-center users-to-follow">
+        <div className='row justify-content-md-center users-to-follow'>
           {displayUsers}
         </div>
       </div>

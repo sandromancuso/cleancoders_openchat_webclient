@@ -4,7 +4,7 @@ import { shallow } from 'enzyme'
 import userService from 'services/User'
 import FindUsersToFollow from 'components/FindUsersToFollow'
 import { aUser, someUsers } from 'testFixtures'
-import UserToFollow from '../../components/UserToFollow';
+import UserToFollow from '../../components/UserToFollow'
 
 const router = createMockRouter()
 const context = { router }
@@ -32,8 +32,8 @@ describe('FindUsersToFollow', () => {
 
   it('allows to follow users', () => {
     const userToFollow = wrapper.find(UserToFollow).at(0)
-    const followButton = userToFollow.shallow().find('.btn');
-  
+    const followButton = userToFollow.shallow().find('.btn')
+
     followButton.simulate('click')
 
     expect(userService.follow).toHaveBeenCalledWith(someUsers[0].id)
