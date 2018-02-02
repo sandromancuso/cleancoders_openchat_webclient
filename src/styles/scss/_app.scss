@@ -24,3 +24,35 @@ body {
   line-height: $footer-size;
   background-color: $gray-100;
 }
+
+.post {
+  border: 1px solid $border-color;
+  border-radius: 5px;
+  padding: 20px;
+  
+  .post-header {
+    margin-bottom: 3px;
+  }
+
+  .post-text {
+    font-size: 20px;
+  }
+}
+
+.users-to-follow {
+  .user-to-follow {
+    margin: 5px;
+    
+    .fa-user {
+      color: $custom-red;
+      margin-right: 5px;
+    }
+
+    .card-title {
+      margin-bottom: 3px; 
+    }
+    .card-text {
+      font-size: 14px;
+    } 
+  }
+}

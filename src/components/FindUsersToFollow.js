@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
 import userService from 'services/User'
+import UserToFollow from './UserToFollow';
 
 class FindUsersToFollow extends Component {
   constructor (props) {
@@ -20,34 +20,15 @@ class FindUsersToFollow extends Component {
     const users = await userService.getUsersToFollow()
     await this.setState({ users: users })
   }
-
+  
   render () {
     const displayUsers = this.state.users.map(user => (
-      <div className='user card my-3' key={user.id}>
-        <div className='card-header'>
-          <div className='row justify-content-between'>
-            <div className='col-6'>
-              <Link to={`/wall/${user.id}`}>{user.name}</Link>
-            </div>
-            <div className='col-6 text-right text-muted'>
-              <button
-                className='btn btn-sm btn-primary'
-                onClick={() => this.followUser(user.id)}
-              >
-                <i className='fa fa-plus' /> Follow
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className='card-body'>
-          {user.about}
-        </div>
-      </div>
+      <UserToFollow key={user.id} user={user} onClick={() => this.followUser(user.id)}/>
     ))
 
     return (
       <div className='container'>
-        <div>
+        <div className="row justify-content-md-center users-to-follow">
           {displayUsers}
         </div>
       </div>
