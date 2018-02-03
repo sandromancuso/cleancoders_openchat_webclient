@@ -27,7 +27,7 @@ describe('FindUsersToFollow', () => {
   })
 
   it('allows to follow users', () => {
-    const user = wrapper.find(UserToFollow).at(0)
+    const user = wrapper.find(UserToFollow).first()
     const onFollow = user.prop('onFollow')
 
     onFollow()

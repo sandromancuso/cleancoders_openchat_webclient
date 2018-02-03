@@ -17,7 +17,7 @@ describe('Header', () => {
   })
 
   it('links to the home', () => {
-    const link = wrapper.find(Link).at(0)
+    const link = wrapper.find(Link).first()
 
     expect(link.prop('to')).toBe('/')
   })
