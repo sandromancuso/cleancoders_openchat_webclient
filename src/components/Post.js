@@ -12,7 +12,7 @@ const Post = ({ post, user }) => {
         <p className='mt-0 post-header'>{isOwnPost
               ? <Link to='/wall'>You</Link>
               : <Link to={`/wall/${user.id}`}>{user.name}</Link>
-            } - <TimeAgo
+            } -<TimeAgo
               datetime={post.dateTime}
               locale='en_UK'
                 />
