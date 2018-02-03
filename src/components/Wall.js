@@ -91,7 +91,7 @@ class Wall extends Component {
 
   getIdFromProps(props) {
     try {
-       return this.props.match.params.id
+       return props.match.params.id
     }
     catch (error) {
       return false
@@ -114,7 +114,10 @@ class Wall extends Component {
 
   async componentWillReceiveProps (props) {
     try {
-      const user = await userService.findById(props.match.params.id)
+      const id = this.getIdFromProps(props)
+      const user = id
+        ? await userService.findById(id)
+        : userService.user
 
       await this.buildState(user)
     } catch (error) {
