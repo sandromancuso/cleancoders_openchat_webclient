@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import userService from 'services/User'
-import UserToFollow from './UserToFollow'
+import UserToFollow from 'components/UserToFollow'
 
 class FindUsersToFollow extends Component {
   constructor (props) {
@@ -23,7 +23,7 @@ class FindUsersToFollow extends Component {
 
   render () {
     const displayUsers = this.state.users.map(user => (
-      <UserToFollow key={user.id} user={user} onClick={() => this.followUser(user.id)} />
+      <UserToFollow key={user.id} user={user} onFollow={() => this.followUser(user.id)} />
     ))
 
     return (

@@ -8,7 +8,7 @@ export default (props) => (
       <p className='card-text'>{props.user.about}</p>
       <button
         className='card-link btn btn-sm btn-primary'
-        onClick={props.onClick}
+        onClick={props.onFollow}
                 >
         <i className='fa fa-plus' /> Follow
             </button>
