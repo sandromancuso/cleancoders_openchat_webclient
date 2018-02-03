@@ -11,12 +11,17 @@ const router = createMockRouter()
 const context = { router }
 
 describe('Profile', () => {
-  describe('being of its own user', () => {
-    let wrapper
+  let wrapper
 
+  beforeEach(() => {
+    userService.user = aUser
+    userService.isFollowee = jest.fn(() => Promise.resolve(false))
+    userService.follow = jest.fn()
+    postService.getPostsOfUser = jest.fn(() => Promise.resolve(somePosts))
+  })
+
+  describe('being of its own user', () => {
     beforeEach(async () => {
-      userService.user = aUser
-      postService.getPostsOfUser = jest.fn(() => Promise.resolve(somePosts))
       userService.findById = jest.fn(() => Promise.resolve(aUser))
       wrapper = shallow(<Profile />, { context })
       await flushPromises()
@@ -26,7 +31,7 @@ describe('Profile', () => {
     it('shows the title', () => {
       const title = wrapper.find('h2')
 
-      expect(title.text()).toBe('Your profile')
+      expect(title.text()).toBe(`Your profile, ${aUser.name}`)
     })
 
     it('shows the wall of posts of the user', () => {
@@ -44,19 +49,16 @@ describe('Profile', () => {
   })
 
   describe('using the id of another user in the route', () => {
-    let wrapper
     let match
 
     beforeEach(async () => {
-      userService.user = aUser
-      postService.getPostsOfUser = jest.fn(() => Promise.resolve(somePosts))
       userService.findById = jest.fn(() => Promise.resolve(anotherUser))
       match = {
         params: {
           id: anotherUser.id
         }
       }
-      wrapper = shallow(<Profile match={match} />, { context }).setProps({match})
+      wrapper = shallow(<Profile/>, { context }).setProps({match})
       await flushPromises()
       wrapper.update()
     })
@@ -78,6 +80,14 @@ describe('Profile', () => {
       const link = wrapper.find(Link)
 
       expect(link.prop('to')).toBe('/wall/' + anotherUser.id)
+    })
+
+    it('shows follow button when is not a followee', () => {
+      const button = wrapper.find('.follow')
+
+      button.simulate('click')
+
+      expect(userService.follow).toHaveBeenCalledWith(anotherUser.id)
     })
   })
 })

@@ -10,7 +10,8 @@ class Profile extends Component {
     super(props, context)
     this.state = {
       user: {},
-      list: []
+      list: [],
+      showFollow: false
     }
   }
 
@@ -26,28 +27,51 @@ class Profile extends Component {
     return this.state.user.id === userService.user.id
   }
 
+  async follow () {
+    await userService.follow(this.state.user.id)
+    this.setState({ showFollow: false })
+  }
+
+  followButton () {
+    if (this.isOwnProfile()) return null
+
+    return this.state.showFollow
+    ? (<button className='btn btn-md btn-primary follow' onClick={() => this.follow()}>
+      <i className='fa fa-plus' /> Follow
+    </button>)
+    : 'Following'
+  }
+
+
   render () {
     return (
       <div className='container'>
         <h2>
           {this.isOwnProfile()
-            ? 'Your profile'
+            ? `Your profile, ${this.state.user.name}`
             : `${this.state.user.name}'s profile`
           }
         </h2>
-        {this.isOwnProfile()
-          ? <Link to={`/wall/`}>See wall</Link>
-          : <Link to={`/wall/${this.state.user.id}`}>See {this.state.user.name}'s wall</Link>
-        }
+        <div className='row'>
+          <div className='col-sm-10'>
+            {this.isOwnProfile()
+              ? <Link to={`/wall/`}>See wall</Link>
+              : <Link to={`/wall/${this.state.user.id}`}>See {this.state.user.name}'s wall</Link>
+            }
+          </div>
+          <div className='col-sm-2 text-right'>
+            {this.followButton()}
+          </div>
+        </div>
         <hr />
         {this.list()}
       </div>
     )
   }
 
-  async setList (id) {
-    const posts = await postService.getPostsOfUser(id)
-
+  async buildState (user) {
+    const showFollow = !this.isOwnProfile() && !await userService.isFollowee(user.id)
+    const posts = await postService.getPostsOfUser(user.id)
     const list = await Promise.all(
       posts.map(async post => {
         const user = await userService.findById(post.userId)
@@ -55,29 +79,46 @@ class Profile extends Component {
       })
     )
 
-    await this.setState({ list: list })
+    await this.setState({
+      user,
+      list,
+      showFollow
+    })
   }
 
-  async buildState (id) {
-    const user = id
-      ? await userService.findById(id)
-      : userService.user
-    await this.setState({ user: user })
-    await this.setList(user.id)
+  getIdFromProps(props) {
+    try {
+       return this.props.match.params.id
+    }
+    catch (error) {
+      return false
+    }
   }
 
   async componentDidMount () {
-    const hasParams = this.props && this.props.match && this.props.match.params
-    const id = hasParams
-      ? this.props.match.params.id
-      : null
+    try {
+      const id = this.getIdFromProps(this.props)
+      const user = id
+        ? await userService.findById(id)
+        : userService.user
 
-    await this.buildState(id)
+      await this.buildState(user)
+    } catch (error) {
+      console.error(error)
+      await userService.logout()
+      this.context.router.history.push('/')
+    }
   }
 
   async componentWillReceiveProps (props) {
-    const id = props.match.params.id
-    await this.buildState(id)
+    try {
+      const user = await userService.findById(props.match.params.id)
+
+      await this.buildState(user)
+    } catch (error) {
+      await userService.logout()
+      this.context.router.history.push('/')
+    }
   }
 }
 
