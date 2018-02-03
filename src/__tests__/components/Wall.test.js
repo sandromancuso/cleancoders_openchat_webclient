@@ -36,7 +36,7 @@ describe('Wall', () => {
     it('shows the title', () => {
       const title = wrapper.find('h2')
 
-      expect(title.text()).toBe('Your wall')
+      expect(title.text()).toBe(`Your wall, ${aUser.name}`)
     })
 
     it('shows the wall of posts of the user', () => {

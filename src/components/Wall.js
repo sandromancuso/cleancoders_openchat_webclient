@@ -48,7 +48,7 @@ class Wall extends Component {
       <div className='container'>
         <h2>
           {this.isOwnWall()
-            ? 'Your wall'
+            ? `Your wall, ${this.state.user.name}`
             : `${this.state.user.name}'s wall`
           }
         </h2>
@@ -72,10 +72,7 @@ class Wall extends Component {
     )
   }
 
-  async buildState (id) {
-    const user = id
-      ? await userService.findById(id)
-      : userService.user
+  async buildState (user) {
     const showFollow = !this.isOwnWall() && !await userService.isFollowee(user.id)
     const posts = await postService.getWallOfUser(user.id)
     const list = await Promise.all(
@@ -92,18 +89,38 @@ class Wall extends Component {
     })
   }
 
-  async componentDidMount () {
-    const hasParams = this.props && this.props.match && this.props.match.params
-    const id = hasParams
-      ? this.props.match.params.id
-      : null
+  getIdFromProps(props) {
+    try {
+       return this.props.match.params.id
+    }
+    catch (error) {
+      return false
+    }
+  }
 
-    await this.buildState(id)
+  async componentDidMount () {
+    try {
+      const id = this.getIdFromProps(this.props)
+      const user = id
+        ? await userService.findById(id)
+        : userService.user
+
+      await this.buildState(user)
+    } catch (error) {
+      await userService.logout()
+      this.context.router.history.push('/')
+    }
   }
 
   async componentWillReceiveProps (props) {
-    const id = props.match.params.id
-    await this.buildState(id)
+    try {
+      const user = await userService.findById(props.match.params.id)
+
+      await this.buildState(user)
+    } catch (error) {
+      await userService.logout()
+      this.context.router.history.push('/')
+    }
   }
 }
 
