@@ -111,7 +111,7 @@ class Profile extends Component {
 
   async componentWillReceiveProps (props) {
     try {
-      const id = this.getIdFromProps(this.props)
+      const id = this.getIdFromProps(props)
       const user = id
         ? await userService.findById(id)
         : userService.user
