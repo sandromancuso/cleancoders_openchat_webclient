@@ -89,11 +89,10 @@ class Wall extends Component {
     })
   }
 
-  getIdFromProps(props) {
+  getIdFromProps (props) {
     try {
-       return props.match.params.id
-    }
-    catch (error) {
+      return props.match.params.id
+    } catch (error) {
       return false
     }
   }

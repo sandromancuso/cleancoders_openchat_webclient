@@ -58,7 +58,7 @@ describe('Profile', () => {
           id: anotherUser.id
         }
       }
-      wrapper = shallow(<Profile/>, { context }).setProps({match})
+      wrapper = shallow(<Profile />, { context }).setProps({match})
       await flushPromises()
       wrapper.update()
     })

@@ -42,7 +42,6 @@ class Profile extends Component {
     : 'Following'
   }
 
-
   render () {
     return (
       <div className='container'>
@@ -86,11 +85,10 @@ class Profile extends Component {
     })
   }
 
-  getIdFromProps(props) {
+  getIdFromProps (props) {
     try {
-       return props.match.params.id
-    }
-    catch (error) {
+      return props.match.params.id
+    } catch (error) {
       return false
     }
   }
