@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import swal from 'sweetalert'
 import { Link } from 'react-router-dom'
 import Post from 'components/Post'
 import PostCreator from 'components/PostCreator'
@@ -106,6 +107,7 @@ class Wall extends Component {
 
       await this.buildState(user)
     } catch (error) {
+      swal(error.name, error.message, 'error')
       await userService.logout()
       this.context.router.history.push('/')
     }
@@ -120,6 +122,7 @@ class Wall extends Component {
 
       await this.buildState(user)
     } catch (error) {
+      swal(error.name, error.message, 'error')
       await userService.logout()
       this.context.router.history.push('/')
     }
