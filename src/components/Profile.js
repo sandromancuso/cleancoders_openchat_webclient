@@ -104,8 +104,6 @@ class Profile extends Component {
       await this.buildState(user)
     } catch (error) {
       swal(error.name, error.message, 'error')
-      await userService.logout()
-      this.context.router.history.push('/')
     }
   }
 
@@ -119,8 +117,6 @@ class Profile extends Component {
       await this.buildState(user)
     } catch (error) {
       swal(error.name, error.message, 'error')
-      await userService.logout()
-      this.context.router.history.push('/')
     }
   }
 }

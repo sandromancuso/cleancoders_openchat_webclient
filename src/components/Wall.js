@@ -108,8 +108,6 @@ class Wall extends Component {
       await this.buildState(user)
     } catch (error) {
       swal(error.name, error.message, 'error')
-      await userService.logout()
-      this.context.router.history.push('/')
     }
   }
 
@@ -123,8 +121,6 @@ class Wall extends Component {
       await this.buildState(user)
     } catch (error) {
       swal(error.name, error.message, 'error')
-      await userService.logout()
-      this.context.router.history.push('/')
     }
   }
 }
