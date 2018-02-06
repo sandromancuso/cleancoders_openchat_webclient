@@ -15,7 +15,7 @@ axios.interceptors.response.use(
 )
 
 const parse = data => new User({
-  id: data.userId,
+  id: data.id,
   name: data.username,
   about: data.about
 })
