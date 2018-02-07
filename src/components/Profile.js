@@ -70,20 +70,18 @@ class Profile extends Component {
   }
 
   async buildState (user) {
-    const showFollow = !this.isOwnProfile() && !await userService.isFollowee(user.id)
+    await this.setState({ user })
+
     const posts = await postService.getPostsOfUser(user.id)
     const list = await Promise.all(
       posts.map(async post => {
-        const user = await userService.findById(post.userId)
         return { post, user }
       })
     )
+    await this.setState({ list })
 
-    await this.setState({
-      user,
-      list,
-      showFollow
-    })
+    const showFollow = !this.isOwnProfile() && !await userService.isFollowee(user.id)
+    await this.setState({ showFollow })
   }
 
   getIdFromProps (props) {

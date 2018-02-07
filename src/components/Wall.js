@@ -74,7 +74,8 @@ class Wall extends Component {
   }
 
   async buildState (user) {
-    const showFollow = !this.isOwnWall() && !await userService.isFollowee(user.id)
+    await this.setState({ user: user })
+
     const posts = await postService.getWallOfUser(user.id)
     const list = await Promise.all(
       posts.map(async post => {
@@ -82,12 +83,10 @@ class Wall extends Component {
         return { post, user }
       })
     )
+    await this.setState({ list: list })
 
-    await this.setState({
-      user: user,
-      list: list,
-      showFollow: showFollow
-    })
+    const showFollow = !this.isOwnWall() && !await userService.isFollowee(user.id)
+    await this.setState({ showFollow: showFollow })
   }
 
   getIdFromProps (props) {

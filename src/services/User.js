@@ -15,7 +15,7 @@ axios.interceptors.response.use(
 )
 
 const parse = data => new User({
-  id: data.userId,
+  id: data.id,
   name: data.username,
   about: data.about
 })
@@ -92,13 +92,6 @@ class UserService {
     const response = await axios.get(`${process.env.REACT_APP_API_URL}user/${this.user.id}/followees`)
 
     return response.data.map(user => parse(user))
-  }
-
-  async getUsersToFollow () {
-    let users = await this.getUsers()
-    users = users.filter(user => user.id !== this.user.id)
-    const followees = await this.getFollowees()
-    return users.filter(userToFollow => !followees.some(followee => followee.id === userToFollow.id))
   }
 
   async isFollowee (id) {
