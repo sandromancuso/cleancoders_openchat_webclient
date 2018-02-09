@@ -65,9 +65,13 @@ class Wall extends Component {
           </div>
         </div>
         <hr />
-        <div className='row'>
-          {this.isOwnWall() ? <PostCreator /> : null}
-        </div>
+        {this.isOwnWall() ? (
+          <div className='row'>
+            <PostCreator />
+          </div>)
+            :
+            null
+        }
         {this.list()}
       </div>
     )
