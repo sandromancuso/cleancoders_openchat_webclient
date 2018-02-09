@@ -28,20 +28,20 @@ class PostService {
     const request = {
       text: text
     }
-    const response = await axios.post(`${process.env.REACT_APP_API_URL}user/${userId}/posts`,
+    const response = await axios.post(`${process.env.REACT_APP_API_URL}users/${userId}/timeline`,
       JSON.stringify(request))
 
     return parse(response.data)
   }
 
   async getPostsOfUser (userId) {
-    const response = await axios.get(`${process.env.REACT_APP_API_URL}user/${userId}/timeline`)
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}users/${userId}/timeline`)
 
     return response.data.map(post => parse(post))
   }
 
   async getWallOfUser (userId) {
-    const response = await axios.get(`${process.env.REACT_APP_API_URL}user/${userId}/wall`)
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}users/${userId}/wall`)
 
     return response.data.map(post => parse(post))
   }

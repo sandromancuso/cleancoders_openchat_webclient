@@ -34,7 +34,7 @@ class UserService {
       about: user.about
     }
     const response = await axios.post(
-      `${process.env.REACT_APP_API_URL}registration`,
+      `${process.env.REACT_APP_API_URL}users`,
       JSON.stringify(request))
 
     this.user = parse(response.data)
@@ -85,12 +85,12 @@ class UserService {
       followeeId: id
     }
     await axios.post(
-      `${process.env.REACT_APP_API_URL}follow`,
+      `${process.env.REACT_APP_API_URL}followings`,
       JSON.stringify(request))
   }
 
   async getFollowees () {
-    const response = await axios.get(`${process.env.REACT_APP_API_URL}user/${this.user.id}/followees`)
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}followings/${this.user.id}/followees`)
 
     return response.data.map(user => parse(user))
   }
