@@ -6,14 +6,14 @@ export default (props) => (
     <div className='card-body'>
       <p className='card-title'><i className='fa fa-user' /><Link to={`/wall/${props.user.id}`}>{props.user.name}</Link></p>
       <p className='card-text'>{props.user.about}</p>
-      {props.following ?
+      {!props.isFollowee ?
         (<button
           className='card-link btn btn-sm btn-primary'
           onClick={props.onFollow}
           >
             <i className='fa fa-plus' /> Follow</button>
         ) :
-          (<span>Already following</span>)
+        (<span>Already following</span>)
       }
     </div>
   </div>

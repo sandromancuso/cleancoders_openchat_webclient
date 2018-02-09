@@ -4,8 +4,8 @@ import PostCreator from 'components/PostCreator'
 import userService from 'services/User'
 import postService from 'services/Post'
 import { aUser } from 'testFixtures'
-import swal from 'sweetalert'
-jest.mock('sweetalert')
+import showError from 'utils/showError'
+jest.mock('utils/showError')
 
 const state = {
   text: 'someText'
@@ -35,7 +35,7 @@ describe('PostCreator', () => {
   })
 
   it('handles posting errors', async () => {
-    swal = jest.fn()
+    showError = jest.fn()
     const anError = new Error('Some posting error')
     postService.createPostByUser = jest.fn(() => Promise.reject(anError))
     wrapper = shallow(<PostCreator />, { context }).setState(state)
@@ -46,6 +46,6 @@ describe('PostCreator', () => {
     await flushPromises()
 
     expect(postService.createPostByUser).toHaveBeenCalledWith(aUser.id, state.text)
-    expect(swal).toHaveBeenCalledWith('Error', anError.message, 'error')
+    expect(showError).toHaveBeenCalledWith('Error', anError.message, 'error')
   })
 })

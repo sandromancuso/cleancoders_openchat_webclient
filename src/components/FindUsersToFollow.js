@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import swal from 'sweetalert'
+import showError from 'utils/showError'
 import userService from 'services/User'
 import UserToFollow from 'components/UserToFollow'
 
@@ -8,7 +8,8 @@ class FindUsersToFollow extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      users: []
+      users: [],
+      followees: []
     }
   }
 
@@ -16,38 +17,58 @@ class FindUsersToFollow extends Component {
     router: PropTypes.object.isRequired
   }
 
-  async followUser (id) {
-    try {
-      await userService.follow(id)
-      const users = await userService.getUsers()
-      await this.setState({ users: users })
-    }
-    catch (error) {
-      swal(error.name, error.message, 'error')
-    }
-  }
-
-  render () {
+   render () {
     const displayUsers = this.state.users.map(user => (
-      <UserToFollow key={user.id} user={user} following={this.following(user)} onFollow={() => this.followUser(user.id)} />
+      <UserToFollow
+        key={user.id}
+        user={user}
+        isFollowee={this.isFollowee(user.id)}
+        onFollow={() => this.followUser(user.id)}
+      />
     ))
 
     return (
       <div className='container'>
-        { this.noUsersToFollow ? 'No users to follow.' : null }
-        <div className='row justify-content-md-center users-to-follow'>
-          {displayUsers}
-        </div>
+        { this.noUsersToFollow() ?
+          'There are no users to follow.' :
+          (<div className='row justify-content-md-center users-to-follow'>
+            {displayUsers}
+          </div>)
+        }
       </div>
     )
   }
 
-  async following (user) {
+  isFollowee (id) {
+    return this.state.followees.some( user => user.id === id)
+  }
+
+  async followUser (id) {
     try {
-      return await userService.isFollowee(user.id)
+      await userService.follow(id)
+      await this.updateFollowees()
     }
     catch (error) {
-      swal(error.name, error.message, 'error')
+      showError(error)
+    }
+  }
+
+  async updateUsers () {
+    try {
+      let users = await userService.getUsers()
+      users = users.filter(user => user.id !== userService.user.id)
+      this.setState({ users })
+    } catch (error) {
+      showError(error)
+    }
+  }
+
+  async updateFollowees () {
+    try {
+      const followees = await userService.getFollowees()
+      this.setState({ followees })
+    } catch (error) {
+      showError(error)
     }
   }
 
@@ -55,14 +76,15 @@ class FindUsersToFollow extends Component {
     return this.state.users.length === 0
   }
 
+  sortUsers () {
+    const users = this.state.users.sort( user => this.isFollowee(user.id) ? 1 : -1 )
+    this.setState({ users })
+  }
+
   async componentDidMount () {
-    try {
-      let users = await userService.getUsers()
-      users = users.filter(user => user.id !== userService.user.id)
-      await this.setState({ users: users })
-    } catch (error) {
-      swal(error.name, error.message, 'error')
-    }
+    await this.updateUsers()
+    await this.updateFollowees()
+    this.sortUsers()
   }
 }
 

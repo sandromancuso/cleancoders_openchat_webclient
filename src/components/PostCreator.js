@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import swal from 'sweetalert'
+import showError from 'utils/showError'
 import PropTypes from 'prop-types'
 import userService from 'services/User'
 import postService from 'services/Post'
@@ -23,7 +23,7 @@ class PostCreator extends Component {
       this.setState({ text: '' })
       this.context.router.history.push('/')
     } catch (error) {
-      swal(error.name, error.message, 'error')
+      showError(error)
     }
   }
 

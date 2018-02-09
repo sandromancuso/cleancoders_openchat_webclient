@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import swal from 'sweetalert'
+import showError from 'utils/showError'
 import { Link } from 'react-router-dom'
 import Post from 'components/Post'
 import userService from 'services/User'
@@ -70,7 +70,7 @@ class Profile extends Component {
   }
 
   async buildState (user) {
-    await this.setState({ user })
+    this.setState({ user })
 
     const posts = await postService.getPostsOfUser(user.id)
     const list = await Promise.all(
@@ -78,10 +78,10 @@ class Profile extends Component {
         return { post, user }
       })
     )
-    await this.setState({ list })
+    this.setState({ list })
 
     const showFollow = !this.isOwnProfile() && !await userService.isFollowee(user.id)
-    await this.setState({ showFollow })
+    this.setState({ showFollow })
   }
 
   getIdFromProps (props) {
@@ -101,7 +101,7 @@ class Profile extends Component {
 
       await this.buildState(user)
     } catch (error) {
-      swal(error.name, error.message, 'error')
+      showError(error)
     }
   }
 
@@ -114,7 +114,7 @@ class Profile extends Component {
 
       await this.buildState(user)
     } catch (error) {
-      swal(error.name, error.message, 'error')
+      showError(error)
     }
   }
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import swal from 'sweetalert'
+import showError from 'utils/showError'
 import { Link } from 'react-router-dom'
 import userService from 'services/User'
 
@@ -23,7 +23,7 @@ class Login extends Component {
       await userService.login(this.state)
       this.context.router.history.push('/')
     } catch (error) {
-      swal(error.name, error.message, 'error')
+      showError(error)
     }
   }
 

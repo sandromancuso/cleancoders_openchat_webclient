@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import swal from 'sweetalert'
+import showError from 'utils/showError'
 import { Link } from 'react-router-dom'
 import Post from 'components/Post'
 import PostCreator from 'components/PostCreator'
@@ -74,7 +74,7 @@ class Wall extends Component {
   }
 
   async buildState (user) {
-    await this.setState({ user: user })
+    this.setState({ user: user })
 
     const posts = await postService.getWallOfUser(user.id)
     const list = await Promise.all(
@@ -83,10 +83,10 @@ class Wall extends Component {
         return { post, user }
       })
     )
-    await this.setState({ list: list })
+    this.setState({ list: list })
 
     const showFollow = !this.isOwnWall() && !await userService.isFollowee(user.id)
-    await this.setState({ showFollow: showFollow })
+    this.setState({ showFollow: showFollow })
   }
 
   getIdFromProps (props) {
@@ -106,7 +106,7 @@ class Wall extends Component {
 
       await this.buildState(user)
     } catch (error) {
-      swal(error.name, error.message, 'error')
+      showError(error)
     }
   }
 
@@ -119,7 +119,7 @@ class Wall extends Component {
 
       await this.buildState(user)
     } catch (error) {
-      swal(error.name, error.message, 'error')
+      showError(error)
     }
   }
 }

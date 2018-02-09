@@ -25,9 +25,9 @@
     "build-css": "node-sass-chokidar --include-path ./src/styles/scss --include-path ./node_modules src/styles/scss/ -o src/styles/css",
     "build": "npm run build-css && react-scripts build",
     "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src/styles/scss/ --include-path ./node_modules src/styles/scss/ -o src/styles/css --watch --recursive",
-    "unit": "react-scripts test components --env=jsdom",
-    "integration": "react-scripts test services --env=jsdom",
-    "test": "react-scripts test services components --env=jsdom",
+    "unit": "react-scripts test unit --env=jsdom",
+    "integration": "react-scripts test integration --env=jsdom",
+    "test": "react-scripts test unit integration --env=jsdom",
     "lint": "standard --env jest",
     "eject": "react-scripts eject"
   },
