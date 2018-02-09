@@ -1,5 +1,3 @@
-import React from 'react'
-import { shallow } from 'enzyme'
 import userService from 'services/User'
 import FindUsersToFollow from 'views/FindUsersToFollow'
 import { aUser, anotherUser, someUsers } from 'testFixtures'

@@ -1,6 +1,4 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
-import { shallow } from 'enzyme'
 import userService from 'services/User'
 import postService from 'services/Post'
 import Profile from 'views/Profile'

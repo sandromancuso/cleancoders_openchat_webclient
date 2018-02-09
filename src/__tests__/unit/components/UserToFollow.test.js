@@ -1,6 +1,4 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
-import { shallow } from 'enzyme'
 import UserToFollow from 'components/UserToFollow'
 import { aUser } from 'testFixtures'
 

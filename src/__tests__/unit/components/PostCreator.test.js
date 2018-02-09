@@ -1,5 +1,3 @@
-import React from 'react'
-import { shallow } from 'enzyme'
 import PostCreator from 'components/PostCreator'
 import userService from 'services/User'
 import postService from 'services/Post'

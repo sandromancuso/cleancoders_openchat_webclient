@@ -1,5 +1,3 @@
-import React from 'react'
-import { shallow } from 'enzyme'
 import { Link } from 'react-router-dom'
 import TimeAgo from 'timeago-react'
 import Post from 'components/Post'

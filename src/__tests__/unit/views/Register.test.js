@@ -1,6 +1,4 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
-import { shallow } from 'enzyme'
 import Register from 'views/Register'
 import userService from 'services/User'
 import showError from 'utils/showError'
