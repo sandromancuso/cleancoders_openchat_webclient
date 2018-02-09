@@ -35,7 +35,7 @@ describe('PostCreator', () => {
   })
 
   it('handles posting errors', async () => {
-    showError = jest.fn()
+    showError.mockClear()
     const anError = new Error('Some posting error')
     postService.createPostByUser = jest.fn(() => Promise.reject(anError))
     wrapper = shallow(<PostCreator />, { context }).setState(state)
@@ -46,6 +46,6 @@ describe('PostCreator', () => {
     await flushPromises()
 
     expect(postService.createPostByUser).toHaveBeenCalledWith(aUser.id, state.text)
-    expect(showError).toHaveBeenCalledWith('Error', anError.message, 'error')
+    expect(showError).toHaveBeenCalledWith(anError)
   })
 })

@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import userService from 'services/User'
 import FindUsersToFollow from 'components/FindUsersToFollow'
-import { aUser, someUsers } from 'testFixtures'
+import { aUser, anotherUser, someUsers } from 'testFixtures'
 import UserToFollow from 'components/UserToFollow'
 
 const router = createMockRouter()
@@ -14,7 +14,8 @@ describe('FindUsersToFollow', () => {
   beforeEach(async () => {
     userService.user = aUser
     userService.follow = jest.fn()
-    userService.getUsersToFollow = jest.fn(() => Promise.resolve(someUsers))
+    userService.getUsers = jest.fn(() => Promise.resolve(someUsers))
+    userService.getFollowees = jest.fn(() => Promise.resolve(anotherUser))
     wrapper = shallow(<FindUsersToFollow />, { context })
     await flushPromises()
     wrapper.update()
@@ -22,8 +23,9 @@ describe('FindUsersToFollow', () => {
 
   it('shows the users to follow', () => {
     const users = wrapper.find(UserToFollow)
+    const myself = 1
 
-    expect(users).toHaveLength(someUsers.length)
+    expect(users.length).toBe(someUsers.length - myself)
   })
 
   it('allows to follow users', () => {
@@ -32,6 +34,6 @@ describe('FindUsersToFollow', () => {
 
     onFollow()
 
-    expect(userService.follow).toHaveBeenCalledWith(aUser.id)
+    expect(userService.follow).toHaveBeenCalledWith(anotherUser.id)
   })
 })

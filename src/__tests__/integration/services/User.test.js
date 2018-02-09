@@ -100,20 +100,6 @@ describe('UserService', () => {
     expect(result).toContainEqual(followee)
   })
 
-  it('gets users to follow', async () => {
-    const followee = await userService.register(randomUserData())
-    const userToFollow = await userService.register(randomUserData())
-    const user = await userService.register(userData)
-    await userService.follow(followee.id)
-
-    const result = await userService.getUsersToFollow()
-
-    expect(result).toBeInstanceOf(Array)
-    expect(result).toContainEqual(userToFollow)
-    expect(result).not.toContainEqual(followee)
-    expect(result).not.toContainEqual(user)
-  })
-
   it('identifies followees', async () => {
     const followee = await userService.register(randomUserData())
     await userService.register(userData)
