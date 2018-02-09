@@ -17,7 +17,7 @@ class FindUsersToFollow extends Component {
     router: PropTypes.object.isRequired
   }
 
-   render () {
+  render () {
     const displayUsers = this.state.users.map(user => (
       <UserToFollow
         key={user.id}
@@ -29,9 +29,9 @@ class FindUsersToFollow extends Component {
 
     return (
       <div className='container'>
-        { this.noUsersToFollow() ?
-          <h4 className="m-0 alert alert-secondary p-4 text-center">There are no users to follow.</h4> :
-          (<div className='row justify-content-md-center users-to-follow'>
+        { this.noUsersToFollow()
+          ? <h4 className='m-0 alert alert-secondary p-4 text-center'>There are no users to follow.</h4>
+          : (<div className='row justify-content-md-center users-to-follow'>
             {displayUsers}
           </div>)
         }
@@ -40,15 +40,14 @@ class FindUsersToFollow extends Component {
   }
 
   isFollowee (id) {
-    return this.state.followees.some( user => user.id === id)
+    return this.state.followees.some(user => user.id === id)
   }
 
   async followUser (id) {
     try {
       await userService.follow(id)
       await this.updateFollowees()
-    }
-    catch (error) {
+    } catch (error) {
       showError(error)
     }
   }
@@ -77,7 +76,7 @@ class FindUsersToFollow extends Component {
   }
 
   sortUsers () {
-    const users = this.state.users.sort( user => this.isFollowee(user.id) ? 1 : -1 )
+    const users = this.state.users.sort(user => this.isFollowee(user.id) ? 1 : -1)
     this.setState({ users })
   }
 

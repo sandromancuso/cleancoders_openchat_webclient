@@ -69,8 +69,7 @@ class Wall extends Component {
           <div className='row'>
             <PostCreator />
           </div>)
-            :
-            null
+            : null
         }
         {this.list()}
       </div>
