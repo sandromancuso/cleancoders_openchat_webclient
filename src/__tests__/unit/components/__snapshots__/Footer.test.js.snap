@@ -10,7 +10,7 @@ exports[`Footer renders 1`] = `
            target="_blank"
            rel="noopener noreferrer"
         >
-          Codurance
+          Powered by Codurance.com
         </a>
       </div>
       <div class="col text-right">
