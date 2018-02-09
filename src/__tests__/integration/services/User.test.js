@@ -30,21 +30,19 @@ describe('UserService', () => {
 
   it('handles invalid login credentials', async () => {
     const error = new Error('Invalid credentials.')
-    error.name = 'Bad Request'
 
     const request = userService.login(userData)
 
-    expect(request).rejects.toEqual(error)
+    await expect(request).rejects.toEqual(error)
   })
 
   it('handles invalid register credentials', async () => {
     const error = new Error('Username already in use.')
-    error.name = 'Bad Request'
     await userService.register(userData)
 
     const request = userService.register(userData)
 
-    expect(request).rejects.toEqual(error)
+    await expect(request).rejects.toEqual(error)
   })
 
   it('registers', async () => {
