@@ -142,4 +142,7 @@ fabric.properties
 # Sonarlint plugin
 .idea/sonarlint
 
+#MAC
+.DS_Store
+
 # End of https://www.gitignore.io/api/vim,node,webstorm

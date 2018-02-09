@@ -28,9 +28,9 @@ class FindUsersToFollow extends Component {
     ))
 
     return (
-      <div className='container'>
+      <div className='container alert alert-secondary p-4 text-center'>
         { this.noUsersToFollow() ?
-          'There are no users to follow.' :
+          <h4 className="m-0">There are no users to follow.</h4> :
           (<div className='row justify-content-md-center users-to-follow'>
             {displayUsers}
           </div>)

@@ -26,7 +26,10 @@ class Header extends Component {
 
     return (
       <nav className='navbar navbar-expand navbar-dark bg-primary fixed-top'>
-        <Link to='/' className='navbar-brand'>OpenChat</Link>
+        <Link to='/' className='navbar-brand'>
+          <img className="img-fluid mr-1" width="30" height="30" src="codurance-logo.png" alt="codurance logo" />
+          <span className="align-middle">OpenChat</span>
+        </Link>
 
         <div className='navbar-nav ml-auto'>
           {userService.user ? usersToFollow : null}
