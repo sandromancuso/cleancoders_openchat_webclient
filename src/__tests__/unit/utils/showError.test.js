@@ -9,6 +9,11 @@ describe('showError', () => {
 
     showError(error)
 
-    expect(swal).toHaveBeenCalledWith(error.name, error.message, 'error')
+    expect(swal).toHaveBeenCalledWith({
+      title: error.name,
+      text: error.message,
+      icon: 'error',
+      dangerMode: true
+    })
   })
 })
