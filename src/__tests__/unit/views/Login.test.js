@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { shallow } from 'enzyme'
-import Login from 'components/Login'
+import Login from 'views/Login'
 import userService from 'services/User'
 import showError from 'utils/showError'
 jest.mock('utils/showError')

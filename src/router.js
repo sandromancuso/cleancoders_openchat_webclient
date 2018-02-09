@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
-import Wall from 'components/Wall'
-import Profile from 'components/Profile'
-import Login from 'components/Login'
-import Register from 'components/Register'
-import FindUsersToFollow from 'components/FindUsersToFollow'
+import Wall from 'views/Wall'
+import Profile from 'views/Profile'
+import Login from 'views/Login'
+import Register from 'views/Register'
+import FindUsersToFollow from 'views/FindUsersToFollow'
 import userService from 'services/User'
 
 const PrivateRoute = ({ component: Component, ...rest }) => (

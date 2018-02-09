@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { shallow } from 'enzyme'
 import userService from 'services/User'
 import postService from 'services/Post'
-import Profile from 'components/Profile'
+import Profile from 'views/Profile'
 import Post from 'components/Post'
 import { aUser, anotherUser, somePosts } from 'testFixtures'
 
