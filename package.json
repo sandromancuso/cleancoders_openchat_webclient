@@ -16,7 +16,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "cross-env CI=true yarn unit && yarn lint"
+      "pre-push": "cross-env CI=true npm-run-all -p unit lint"
     }
   },
   "standard": {
