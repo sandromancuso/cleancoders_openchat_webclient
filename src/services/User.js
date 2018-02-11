@@ -2,9 +2,11 @@ import axios from 'axios'
 import User from 'domain/User'
 
 const parseError = response => {
-  const API = response.request.responseURL.split('/').pop().toUpperCase()
+  // const API = response.request.responseURL.split('/').pop().toUpperCase()
+  const API = response.request.responseURL
   const error = new Error(response.data)
-  error.name = API + ' - ' + response.statusText
+  error.name = response.statusText
+  error.message = API
   return error
 }
 
