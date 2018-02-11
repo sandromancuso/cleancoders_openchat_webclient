@@ -48,8 +48,8 @@ class Profile extends Component {
       <div className='container'>
         <h2>
           {this.isOwnProfile()
-            ? `Your profile, ${this.state.user.name}`
-            : `${this.state.user.name}'s profile`
+            ? `Your timeline, ${this.state.user.name}`
+            : `${this.state.user.name}'s timeline`
           }
         </h2>
         <div className='row'>
