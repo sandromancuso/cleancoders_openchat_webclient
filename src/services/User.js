@@ -6,10 +6,9 @@ const matchHost = /^.*\/\/[^\/]+:?[0-9]?\//i
 const parseError = response => {
   const URI = response.config.url.replace(matchHost, '')
   const method = response.config.method.toUpperCase()
-  const errorText = `${method} to ${URI} falied.
-    ${response.data}`
+  const errorText = `${method} /${URI}`
   const error = new Error(errorText)
-  error.name = response.statusText
+  error.name = response.data
   return error
 }
 
