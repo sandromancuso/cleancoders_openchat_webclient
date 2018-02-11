@@ -30,6 +30,14 @@ You can test for linting issues with `yarn lint`.
 
 Some issues can be automatically fixed with `yarn lint --fix`.
 
+## Git hooks
+
+This project is using [git hooks](http://githooks.com/) before certain actions.
+
+If you want to punctually disable it, you can use the flag `--no-verify`
+
+e.g. `git push --no-verify`.
+
 ## Build
 
 You can run `yarn build` to build the project.
