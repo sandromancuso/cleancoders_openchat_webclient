@@ -1,17 +1,11 @@
 import axios from 'axios'
 import Post from 'domain/Post'
-
-const parseError = response => {
-  const API = response.request.responseURL.split('/').pop().toUpperCase()
-  const error = new Error(response.data)
-  error.name = API + ' - ' + response.statusText
-  return error
-}
+import APIError from 'domain/APIError'
 
 axios.interceptors.response.use(
   response => response,
   error => error.response
-    ? Promise.reject(parseError(error.response))
+    ? Promise.reject(new APIError(error.response))
     : Promise.reject(error)
 )
 

@@ -1,4 +1,5 @@
 import User from 'domain/User'
+import APIError from 'domain/APIError'
 import userService from 'services/User'
 
 function expectUserDefined (user) {
@@ -29,7 +30,13 @@ describe('UserService', () => {
   })
 
   it('handles invalid login credentials', async () => {
-    const error = new Error('Invalid credentials.')
+    const error = new APIError({
+      config: {
+        url: `${process.env.REACT_APP_API_URL}login`,
+        method: 'post'
+      },
+      data: 'Invalid Credentials'
+    })
 
     const request = userService.login(userData)
 
@@ -37,7 +44,13 @@ describe('UserService', () => {
   })
 
   it('handles invalid register credentials', async () => {
-    const error = new Error('Username already in use.')
+    const error = new APIError({
+      config: {
+        url: `${process.env.REACT_APP_API_URL}users`,
+        method: 'post'
+      },
+      data: 'Username already in use.'
+    })
     await userService.register(userData)
 
     const request = userService.register(userData)
