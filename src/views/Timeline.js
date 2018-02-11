@@ -6,7 +6,7 @@ import Post from 'components/Post'
 import userService from 'services/User'
 import postService from 'services/Post'
 
-class Profile extends Component {
+class Timeline extends Component {
   constructor (props, context) {
     super(props, context)
     this.state = {
@@ -24,7 +24,7 @@ class Profile extends Component {
     return this.state.list.map(({ post, user }) => <Post key={post.id} post={post} user={user} />)
   }
 
-  isOwnProfile () {
+  isOwnTimeline () {
     return this.state.user.id === userService.user.id
   }
 
@@ -34,7 +34,7 @@ class Profile extends Component {
   }
 
   followButton () {
-    if (this.isOwnProfile()) return null
+    if (this.isOwnTimeline()) return null
 
     return this.state.showFollow
     ? (<button className='btn btn-md btn-primary follow' onClick={() => this.follow()}>
@@ -47,14 +47,14 @@ class Profile extends Component {
     return (
       <div className='container'>
         <h2>
-          {this.isOwnProfile()
+          {this.isOwnTimeline()
             ? `Your timeline, ${this.state.user.name}`
             : `${this.state.user.name}'s timeline`
           }
         </h2>
         <div className='row'>
           <div className='col-sm-10'>
-            {this.isOwnProfile()
+            {this.isOwnTimeline()
               ? <Link to={`/wall/`}>See wall</Link>
               : <Link to={`/wall/${this.state.user.id}`}>See {this.state.user.name}'s wall</Link>
             }
@@ -80,7 +80,7 @@ class Profile extends Component {
     )
     this.setState({ list })
 
-    const showFollow = !this.isOwnProfile() && !await userService.isFollowee(user.id)
+    const showFollow = !this.isOwnTimeline() && !await userService.isFollowee(user.id)
     this.setState({ showFollow })
   }
 
@@ -119,4 +119,4 @@ class Profile extends Component {
   }
 }
 
-export default Profile
+export default Timeline

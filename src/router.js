@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import Wall from 'views/Wall'
-import Profile from 'views/Profile'
+import Timeline from 'views/Timeline'
 import Login from 'views/Login'
 import Register from 'views/Register'
 import FindUsersToFollow from 'views/FindUsersToFollow'
@@ -27,8 +27,8 @@ class Router extends Component {
         <PrivateRoute exact path='/' component={Wall} />
         <PrivateRoute exact path='/wall' component={Wall} />
         <PrivateRoute path='/wall/:id' component={Wall} />
-        <PrivateRoute exact path='/profile' component={Profile} />
-        <PrivateRoute path='/profile/:id' component={Profile} />
+        <PrivateRoute exact path='/timeline' component={Timeline} />
+        <PrivateRoute path='/timeline/:id' component={Timeline} />
         <PrivateRoute path='/findUsers' component={FindUsersToFollow} />
         <Route exact path='/login' render={() => userService.user
           ? <Redirect to='/' />

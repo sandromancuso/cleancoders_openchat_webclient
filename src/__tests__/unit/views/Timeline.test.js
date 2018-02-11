@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom'
 import userService from 'services/User'
 import postService from 'services/Post'
-import Profile from 'views/Profile'
+import Timeline from 'views/Timeline'
 import Post from 'components/Post'
 import { aUser, anotherUser, somePosts } from 'testFixtures'
 
 const router = createMockRouter()
 const context = { router }
 
-describe('Profile', () => {
+describe('Timeline', () => {
   let wrapper
 
   beforeEach(() => {
@@ -21,7 +21,7 @@ describe('Profile', () => {
   describe('being of its own user', () => {
     beforeEach(async () => {
       userService.findById = jest.fn(() => Promise.resolve(aUser))
-      wrapper = shallow(<Profile />, { context })
+      wrapper = shallow(<Timeline />, { context })
       await flushPromises()
       wrapper.update()
     })
@@ -29,7 +29,7 @@ describe('Profile', () => {
     it('shows the title', () => {
       const title = wrapper.find('h2')
 
-      expect(title.text()).toBe(`Your profile, ${aUser.name}`)
+      expect(title.text()).toBe(`Your timeline, ${aUser.name}`)
     })
 
     it('shows the wall of posts of the user', () => {
@@ -56,7 +56,7 @@ describe('Profile', () => {
           id: anotherUser.id
         }
       }
-      wrapper = shallow(<Profile />, { context }).setProps({match})
+      wrapper = shallow(<Timeline />, { context }).setProps({match})
       await flushPromises()
       wrapper.update()
     })
@@ -71,7 +71,7 @@ describe('Profile', () => {
     it('shows the user name', () => {
       const userName = wrapper.find('h2')
 
-      expect(userName.text()).toBe(`${anotherUser.name}'s profile`)
+      expect(userName.text()).toBe(`${anotherUser.name}'s timeline`)
     })
 
     it('links to its wall', () => {
