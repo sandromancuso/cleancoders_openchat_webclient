@@ -17,7 +17,7 @@
   "standard": {
     "parser": "babel-eslint",
     "ignore": [ "src/registerServiceWorker.js" ],
-    "globals": [ "flushPromises", "createMockRouter", "localStorage", "contextTypes" ]
+    "globals": [ "flushPromises", "createMockRouter", "localStorage", "contextTypes", "shallow", "mount" ]
   },
   "scripts": {
     "start-js": "react-scripts start",

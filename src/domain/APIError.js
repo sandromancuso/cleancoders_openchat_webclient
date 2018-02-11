@@ -5,7 +5,7 @@ const getMethod = response => response.config.method.toUpperCase()
 const createErrorText = response => `${getMethod(response)} /${getURI(response)}`
 
 class APIError extends Error {
-  constructor(response) {
+  constructor (response) {
     super(createErrorText(response))
     this.name = response.data
   }
