@@ -56,8 +56,8 @@ class Wall extends Component {
         <div className='row'>
           <div className='col-sm-10'>
             {this.isOwnWall()
-              ? <Link to={`/profile/`}>See timeline</Link>
-              : <Link to={`/profile/${this.state.user.id}`}>See {this.state.user.name}'s timeline</Link>
+              ? <Link to={`/timeline/`}>See timeline</Link>
+              : <Link to={`/timeline/${this.state.user.id}`}>See {this.state.user.name}'s timeline</Link>
             }
           </div>
           <div className='col-sm-2 text-right'>

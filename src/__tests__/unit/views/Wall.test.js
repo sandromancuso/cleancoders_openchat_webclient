@@ -44,10 +44,10 @@ describe('Wall', () => {
       expect(posts).toHaveLength(somePosts.length)
     })
 
-    it('links to its profile', () => {
+    it('links to its timeline', () => {
       const link = wrapper.find(Link)
 
-      expect(link.prop('to')).toBe('/profile/')
+      expect(link.prop('to')).toBe('/timeline/')
     })
   })
 
@@ -83,10 +83,10 @@ describe('Wall', () => {
       expect(wrapper.find(PostCreator)).toHaveLength(0)
     })
 
-    it('links to its profile', () => {
+    it('links to its timeline', () => {
       const link = wrapper.find(Link)
 
-      expect(link.prop('to')).toBe('/profile/' + anotherUser.id)
+      expect(link.prop('to')).toBe('/timeline/' + anotherUser.id)
     })
 
     it('shows follow button when is not a followee', () => {
