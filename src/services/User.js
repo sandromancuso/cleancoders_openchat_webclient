@@ -1,12 +1,15 @@
 import axios from 'axios'
 import User from 'domain/User'
 
+const matchHost = /^.*\/\/[^\/]+:?[0-9]?\//i
+
 const parseError = response => {
-  // const API = response.request.responseURL.split('/').pop().toUpperCase()
-  const API = response.request.responseURL
-  const error = new Error(response.data)
+  const URI = response.config.url.replace(matchHost, '')
+  const method = response.config.method.toUpperCase()
+  const errorText = `${method} to ${URI} falied.
+    ${response.data}`
+  const error = new Error(errorText)
   error.name = response.statusText
-  error.message = API
   return error
 }
 
