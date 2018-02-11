@@ -20,6 +20,7 @@
     }
   },
   "standard": {
+    "env": "jest",
     "parser": "babel-eslint",
     "ignore": [
       "src/registerServiceWorker.js"
@@ -42,7 +43,7 @@
     "unit": "react-scripts test unit --env=jsdom",
     "integration": "react-scripts test integration --env=jsdom",
     "test": "react-scripts test unit integration --env=jsdom",
-    "lint": "standard --env jest",
+    "lint": "standard",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
