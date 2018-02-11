@@ -1,4 +1,4 @@
-const matchHost = /^.*\/\/[^\/]+:?[0-9]?\//i
+const matchHost = new RegExp('/^.*//[^/]+:?[0-9]?', 'i')
 
 const getURI = response => response.config.url.replace(matchHost, '')
 const getMethod = response => response.config.method.toUpperCase()

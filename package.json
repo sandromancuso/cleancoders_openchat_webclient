@@ -14,10 +14,24 @@
     "sweetalert": "^2.1.0",
     "timeago-react": "^2.0.0"
   },
+  "husky": {
+    "hooks": {
+      "pre-push": "CI=true yarn unit && yarn lint"
+    }
+  },
   "standard": {
     "parser": "babel-eslint",
-    "ignore": [ "src/registerServiceWorker.js" ],
-    "globals": [ "flushPromises", "createMockRouter", "localStorage", "contextTypes", "shallow", "mount" ]
+    "ignore": [
+      "src/registerServiceWorker.js"
+    ],
+    "globals": [
+      "flushPromises",
+      "createMockRouter",
+      "localStorage",
+      "contextTypes",
+      "shallow",
+      "mount"
+    ]
   },
   "scripts": {
     "start-js": "react-scripts start",
@@ -35,6 +49,7 @@
     "babel-eslint": "^8.2.1",
     "enzyme": "^3.1.0",
     "enzyme-adapter-react-16": "^1.0.3",
+    "husky": "^0.15.0-rc.8",
     "jest-serializer-html": "^5.0.0",
     "node-sass-chokidar": "^0.0.3",
     "npm-run-all": "^4.1.2",
