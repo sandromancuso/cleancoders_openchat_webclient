@@ -8,20 +8,24 @@ To manage node versions, it is recommended to use a version manager like [nvm](h
 
 To install the project dependencies you need to use `yarn install`.
 
-If you are in mac, additionaly run `brew install watchman`.
+If you are in mac, additionaly run `brew install watchman` to be able to use a watcher in the tests.
 
 ## Environments
 
 You have the environment variables on `.env`, you can change them to suit your needs.
 
+If you need more environments, [check the documentation](https://github.com/facebook/create-react-app/blob/next/packages/react-scripts/template/README.md#what-other-env-files-can-be-used).
+
 ## Development server
 
-Run `yarn start` for a dev server.
+Run `yarn start` for a development server.
 
 ## Running unit tests
 
 Run `yarn test` to execute every test.
+
 Run `yarn unit` to execute unit tests.
+
 Run `yarn integration` to execute integration tests.
 
 ## Linting
