@@ -9,6 +9,8 @@ axios.interceptors.response.use(
     : Promise.reject(error)
 )
 
+axios.defaults.headers.post['Content-Type'] = 'application/json'
+
 const parse = data => new Post(
   {
     id: data.postId,
