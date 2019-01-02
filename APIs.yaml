@@ -11,7 +11,7 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
 host: localhost:4321
-basePath: /v2
+basePath: /
 schemes:
   - http
 paths:
