@@ -46,3 +46,17 @@ e.g. `git push --no-verify`.
 
 You can run `yarn build` to build the project.
 The build artifacts will be stored in the `dist/` directory.
+
+## Run it with docker
+
+You can build and run the application with docker using `dockerup.sh` script
+
+```
+$ sh ./dockerup.sh
+```
+
+or manually with
+```
+$ docker build -t openchat-frontend .
+$ docker run --rm -itp 5000:5000 openchat-frontend
+```
